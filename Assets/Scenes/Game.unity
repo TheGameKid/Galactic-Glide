@@ -615,14 +615,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidSpawner
   cam: {fileID: 963194227}
-  asteroidPrefab: {fileID: 1615077527607850472, guid: d013c4364aab6b1439a0365bba950554, type: 3}
+  asteroidPrefabs: []
   player: {fileID: 0}
   aimAtPlayer: 0
   spawnInterval: 0.5
   spawnDepthOffset: 40
   viewportSpread: {x: 0.04, y: 0.02}
+  groupSpawnChance: 0.3
+  groupSizeRange: {x: 2, y: 5}
+  groupSpread: 5
+  groupPositionVariation: {x: 3, y: 2}
   speedRange: {x: 4, y: 8}
   uniformScaleRange: {x: 0.8, y: -1.4}
+--- !u!1 &873087965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873087966}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &873087966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873087965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.40278, y: 0.17428, z: 19.90534}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &932606621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,3 +1833,4 @@ SceneRoots:
   - {fileID: 939301058}
   - {fileID: 966089221}
   - {fileID: 754384621}
+  - {fileID: 873087966}
