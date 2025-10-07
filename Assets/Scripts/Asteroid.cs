@@ -5,12 +5,12 @@ public class Asteroid : MonoBehaviour
 {
     [Header("Motion")]
     public float speed = 12f;
-    public Vector3 direction = Vector3.back; // set by spawner
+    public Vector3 direction = Vector3.back;              // set by spawner
     public Vector2 randomSpinRange = new Vector2(-180f, 180f); // deg/sec
 
     [Header("Lifetime / Culling")]
-    public float maxLifetime = 8f;          // safety timer in seconds
-    public float offscreenMargin = 0.1f;    // allow small margin outside viewport
+    public float maxLifetime = 8f;       // safety timer in seconds
+    public float offscreenMargin = 0.1f; // small margin outside viewport
 
     private Rigidbody rb;
     private Camera cam;
@@ -20,8 +20,19 @@ public class Asteroid : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if (!rb) rb = gameObject.AddComponent<Rigidbody>();
         rb.useGravity = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+        // don't freeze Z and make all colliders triggers so they don't block
+        rb.constraints &= ~RigidbodyConstraints.FreezePositionZ;
+        foreach (var col in GetComponentsInChildren<Collider>(true))
+        {
+            col.isTrigger = true; // prevents physical blocking
+        }
+
         cam = Camera.main;
     }
 
@@ -53,7 +64,7 @@ public class Asteroid : MonoBehaviour
             return;
         }
 
-        // off-screen cull
+        // off-screen cull (behind camera or outside viewport)
         if (cam != null)
         {
             Vector3 vp = cam.WorldToViewportPoint(transform.position);

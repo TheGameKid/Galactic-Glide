@@ -4,246 +4,198 @@ public class AsteroidSpawner : MonoBehaviour
 {
     [Header("References")]
     public Camera cam;
-    public GameObject[] asteroidPrefabs; // Array of different asteroid prefabs
+    public GameObject[] asteroidPrefabs;      // drag your asteroid prefabs here
     public Transform player;
     public bool aimAtPlayer = false;
-    
+
     [Header("Prefab Settings")]
-    [Tooltip("Check this if your prefabs are already groups of asteroids")]
-    public bool prefabsAreGroups = true; // Set to true if using group prefabs like asteroid_belt_group_SRP_01
-    [Tooltip("When using group prefabs, extract individual asteroids for single spawning")]
+    [Tooltip("Set true if your prefabs are big groups like asteroid_belt_group_SRP_01")]
+    public bool prefabsAreGroups = true;
+    [Tooltip("When using group prefabs, spawn single rocks extracted from the group")]
     public bool extractIndividualAsteroids = true;
 
     [Header("Spawning")]
-    public float spawnInterval = 0.8f; // Balanced for mixed single/group spawning
-    public float spawnDepthOffset = 20f; // distance from camera (reduced from 50f)
-    public Vector2 viewportSpread = new Vector2(10f, 8f); // world units spread (increased for visibility)
+    public float spawnInterval = 0.8f;
+    public float spawnDepthOffset = 20f;      // distance in front of camera
+    public Vector2 viewportSpread = new Vector2(10f, 8f); // world-unit spread
 
     [Header("Group Spawning")]
-    [Range(0f, 1f)]
-    public float groupSpawnChance = 0.25f; // 25% chance for full groups, 75% for individual asteroids
-    public Vector2Int groupSizeRange = new Vector2Int(2, 3); // Max 3 asteroids per group
-    public float groupSpread = 8f; // Increased from 5f - How spread out the group formation is
-    public Vector2 groupPositionVariation = new Vector2(4f, 3f); // Increased variation
+    [Range(0f, 1f)] public float groupSpawnChance = 0.25f;
+    public Vector2Int groupSizeRange = new Vector2Int(2, 3);
+    public float groupSpread = 8f;
+    public Vector2 groupPositionVariation = new Vector2(4f, 3f);
 
     [Header("Asteroid Variations")]
     public Vector2 speedRange = new Vector2(9f, 16f);
     public Vector2 uniformScaleRange = new Vector2(0.6f, 1.8f);
 
-    float timer;
+    [Header("Layer/Collision")]
+    [Tooltip("Must match your Physics layer name. Use \"Asteroid\" or \"Asteroids\".")]
+    public string asteroidLayerName = "Asteroid";
 
-    void Reset()
-    {
-        cam = Camera.main;
-    }
+    float timer;
+    int asteroidLayer = -1;
+
+    void Reset() { cam = Camera.main; }
 
     void Start()
     {
-        // Initialize camera if not already set
-        if (cam == null)
-            cam = Camera.main;
+        if (!cam) cam = Camera.main;
+
+        // support both singular/plural layer names
+        asteroidLayer = LayerMask.NameToLayer(asteroidLayerName);
+        if (asteroidLayer == -1) asteroidLayer = LayerMask.NameToLayer("Asteroids");
     }
 
     void Update()
     {
-        if (!cam)
-        {
-            Debug.LogWarning("[AsteroidSpawner] No camera assigned!");
-            return;
-        }
-        
-        if (asteroidPrefabs == null || asteroidPrefabs.Length == 0)
-        {
-            Debug.LogWarning("[AsteroidSpawner] No asteroid prefabs assigned! Please assign asteroid prefabs in the Inspector.");
-            return;
-        }
+        if (!cam || asteroidPrefabs == null || asteroidPrefabs.Length == 0) return;
 
         timer += Time.deltaTime;
-        if (timer >= spawnInterval)
+        if (timer < spawnInterval) return;
+        timer = 0f;
+
+        if (prefabsAreGroups && extractIndividualAsteroids)
         {
-            timer = 0f;
-            
-            // Decide whether to spawn single or group
-            if (prefabsAreGroups && extractIndividualAsteroids)
-            {
-                if (Random.value < groupSpawnChance)
-                {
-                    SpawnCustomGroup();
-                }
-                else
-                {
-                    SpawnIndividualFromGroup();
-                }
-            }
-            else if (prefabsAreGroups)
-            {
-                SpawnSingle();
-            }
-            else
-            {
-                if (Random.value < groupSpawnChance)
-                {
-                    SpawnGroup();
-                }
-                else
-                {
-                    SpawnSingle();
-                }
-            }
+            if (Random.value < groupSpawnChance) SpawnCustomGroup();
+            else SpawnIndividualFromGroup();
+        }
+        else if (prefabsAreGroups)
+        {
+            SpawnSingle();
+        }
+        else
+        {
+            if (Random.value < groupSpawnChance) SpawnGroup();
+            else SpawnSingle();
         }
     }
 
     void SpawnSingle()
     {
-        // Randomly select an asteroid prefab from the array
-        GameObject selectedPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-        
-        // Spawn a single asteroid
-        SpawnAsteroidAt(GetRandomSpawnPosition(), selectedPrefab);
+        var prefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
+        SpawnAsteroidAt(GetRandomSpawnPosition(), prefab);
     }
 
     void SpawnGroup()
     {
-        // Determine group size
         int groupSize = Random.Range(groupSizeRange.x, groupSizeRange.y + 1);
-        
-        // Get base spawn position
-        Vector3 basePosition = GetRandomSpawnPosition();
-        
-        // Spawn multiple asteroids in formation
+        Vector3 basePos = GetRandomSpawnPosition();
+
         for (int i = 0; i < groupSize; i++)
         {
-            // Randomly select an asteroid prefab for each asteroid
-            GameObject selectedPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-            
-            // Calculate offset position for this asteroid in the group
+            var prefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
             Vector3 offset = new Vector3(
                 Random.Range(-groupPositionVariation.x, groupPositionVariation.x),
                 Random.Range(-groupPositionVariation.y, groupPositionVariation.y),
                 Random.Range(-groupSpread * 0.5f, groupSpread * 0.5f)
             );
-            
-            Vector3 spawnPosition = basePosition + offset;
-            SpawnAsteroidAt(spawnPosition, selectedPrefab);
+            SpawnAsteroidAt(basePos + offset, prefab);
         }
     }
 
     Vector3 GetRandomSpawnPosition()
     {
-        Vector3 cameraForward = cam.transform.forward;
-        Vector3 cameraRight = cam.transform.right;
-        Vector3 cameraUp = cam.transform.up;
-        
-        Vector3 basePosition = cam.transform.position + cameraForward * spawnDepthOffset;
-        
-        float spreadX = Random.Range(-viewportSpread.x, viewportSpread.x);
-        float spreadY = Random.Range(-viewportSpread.y, viewportSpread.y);
-        
-        return basePosition + (cameraRight * spreadX) + (cameraUp * spreadY);
+        Vector3 basePos = cam.transform.position + cam.transform.forward * spawnDepthOffset;
+        float sx = Random.Range(-viewportSpread.x, viewportSpread.x);
+        float sy = Random.Range(-viewportSpread.y, viewportSpread.y);
+        return basePos + cam.transform.right * sx + cam.transform.up * sy;
     }
 
     void SpawnAsteroidAt(Vector3 spawnPosition, GameObject prefab)
     {
-        if (prefab == null)
-        {
-            Debug.LogError("[SpawnAsteroidAt] Prefab is null!");
-            return;
-        }
+        if (!prefab) return;
 
         GameObject go = Instantiate(prefab, spawnPosition, Quaternion.identity);
         go.name = $"Asteroid_{prefab.name}_{Time.time}";
-        
+
         float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
         go.transform.localScale = Vector3.one * scale;
 
+        // Rigidbody
         var rb = go.GetComponent<Rigidbody>();
         if (!rb) rb = go.AddComponent<Rigidbody>();
         rb.useGravity = false;
+        rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
+        // Asteroid behaviour
         var asteroid = go.GetComponent<Asteroid>();
         if (!asteroid) asteroid = go.AddComponent<Asteroid>();
-        
-        Vector3 direction = aimAtPlayer && player != null ? 
-            (player.position - spawnPosition).normalized : 
-            -cam.transform.forward;
-            
-        asteroid.direction = direction;
+        Vector3 dir = (aimAtPlayer && player)
+            ? (player.position - spawnPosition).normalized
+            : -cam.transform.forward;
+        asteroid.direction = dir;
         asteroid.speed = Random.Range(speedRange.x, speedRange.y);
         asteroid.maxLifetime = 30f;
+
+        // Layer + triggers so they never physically block
+        ApplyLayerAndTriggers(go);
     }
 
     void SpawnIndividualFromGroup()
     {
-        // Randomly select a group prefab
-        GameObject selectedGroupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-        
-        // Get spawn position
-        Vector3 spawnPosition = GetRandomSpawnPosition();
-        
-        // Temporarily instantiate the group to extract a random asteroid from it
-        GameObject tempGroup = Instantiate(selectedGroupPrefab, Vector3.zero, Quaternion.identity);
-        
-        // Find all child objects with MeshRenderer (actual asteroid pieces)
-        MeshRenderer[] asteroidPieces = tempGroup.GetComponentsInChildren<MeshRenderer>();
-        
-        if (asteroidPieces.Length > 0)
+        var groupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
+        Vector3 spawnPos = GetRandomSpawnPosition();
+
+        GameObject temp = Instantiate(groupPrefab, Vector3.zero, Quaternion.identity);
+        var pieces = temp.GetComponentsInChildren<MeshRenderer>(true);
+
+        if (pieces.Length > 0)
         {
-            // Pick a random asteroid piece from the group
-            MeshRenderer selectedPiece = asteroidPieces[Random.Range(0, asteroidPieces.Length)];
-            GameObject selectedAsteroid = selectedPiece.gameObject;
-            
-            // Create a new individual asteroid
-            GameObject individualAsteroid = new GameObject($"IndividualAsteroid_{Time.time}");
-            individualAsteroid.transform.position = spawnPosition;
-            individualAsteroid.transform.rotation = Random.rotation;
-            
-            // Copy the mesh and materials
-            MeshFilter originalMeshFilter = selectedAsteroid.GetComponent<MeshFilter>();
-            MeshRenderer originalRenderer = selectedAsteroid.GetComponent<MeshRenderer>();
-            
-            if (originalMeshFilter != null)
+            var piece = pieces[Random.Range(0, pieces.Length)].gameObject;
+
+            GameObject go = new GameObject($"IndividualAsteroid_{Time.time}");
+            go.transform.SetPositionAndRotation(spawnPos, Random.rotation);
+
+            var srcMF = piece.GetComponent<MeshFilter>();
+            var srcMR = piece.GetComponent<MeshRenderer>();
+            if (srcMF && srcMR)
             {
-                MeshFilter newMeshFilter = individualAsteroid.AddComponent<MeshFilter>();
-                newMeshFilter.mesh = originalMeshFilter.mesh;
-                
-                MeshRenderer newRenderer = individualAsteroid.AddComponent<MeshRenderer>();
-                newRenderer.materials = originalRenderer.materials;
+                var mf = go.AddComponent<MeshFilter>();
+                mf.sharedMesh = srcMF.sharedMesh;
+
+                var mr = go.AddComponent<MeshRenderer>();
+                mr.sharedMaterials = srcMR.sharedMaterials;
+
+                var mc = go.AddComponent<MeshCollider>();
+                mc.sharedMesh = srcMF.sharedMesh;
+                mc.convex = true;
+                mc.isTrigger = true;
             }
-            
-            // Add collider
-            MeshCollider collider = individualAsteroid.AddComponent<MeshCollider>();
-            collider.convex = true;
-            
-            // Apply random scale
+
             float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
-            individualAsteroid.transform.localScale = Vector3.one * scale;
-            
-            // Add physics and movement
-            var rb = individualAsteroid.AddComponent<Rigidbody>();
+            go.transform.localScale = Vector3.one * scale;
+
+            var rb = go.AddComponent<Rigidbody>();
             rb.useGravity = false;
-            
-            var asteroid = individualAsteroid.AddComponent<Asteroid>();
-            asteroid.direction = -cam.transform.forward;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+            var asteroid = go.AddComponent<Asteroid>();
+            asteroid.direction = (aimAtPlayer && player)
+                ? (player.position - spawnPos).normalized
+                : -cam.transform.forward;
             asteroid.speed = Random.Range(speedRange.x, speedRange.y);
             asteroid.maxLifetime = 30f;
-            
-            Debug.Log($"[SpawnIndividualFromGroup] Created individual asteroid from group at {spawnPosition}");
+
+            ApplyLayerAndTriggers(go);
         }
         else
         {
-            Debug.LogWarning("[SpawnIndividualFromGroup] No mesh renderers found in group prefab, falling back to full group");
-            SpawnAsteroidAt(spawnPosition, selectedGroupPrefab);
+            // fallback to spawn the full group
+            SpawnAsteroidAt(spawnPos, groupPrefab);
         }
-        
-        // Clean up the temporary group
-        Destroy(tempGroup);
+
+        Destroy(temp);
     }
 
     void SpawnCustomGroup()
     {
         int groupSize = Random.Range(groupSizeRange.x, groupSizeRange.y + 1);
-        Vector3 basePosition = GetRandomSpawnPosition();
-        
+        Vector3 basePos = GetRandomSpawnPosition();
+
         for (int i = 0; i < groupSize; i++)
         {
             Vector3 offset = new Vector3(
@@ -251,66 +203,73 @@ public class AsteroidSpawner : MonoBehaviour
                 Random.Range(-groupPositionVariation.y, groupPositionVariation.y),
                 Random.Range(-groupSpread * 0.5f, groupSpread * 0.5f)
             );
-            
-            Vector3 spawnPosition = basePosition + offset;
-            SpawnIndividualFromGroupAt(spawnPosition);
+            SpawnIndividualFromGroupAt(basePos + offset);
         }
     }
 
-    void SpawnIndividualFromGroupAt(Vector3 spawnPosition)
+    void SpawnIndividualFromGroupAt(Vector3 spawnPos)
     {
-        // This is similar to SpawnIndividualFromGroup but takes a specific position
-        GameObject selectedGroupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-        
-        // Temporarily instantiate the group to extract a random asteroid from it
-        GameObject tempGroup = Instantiate(selectedGroupPrefab, Vector3.zero, Quaternion.identity);
-        
-        // Find all child objects with MeshRenderer (actual asteroid pieces)
-        MeshRenderer[] asteroidPieces = tempGroup.GetComponentsInChildren<MeshRenderer>();
-        
-        if (asteroidPieces.Length > 0)
+        var groupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
+
+        GameObject temp = Instantiate(groupPrefab, Vector3.zero, Quaternion.identity);
+        var pieces = temp.GetComponentsInChildren<MeshRenderer>(true);
+
+        if (pieces.Length > 0)
         {
-            // Pick a random asteroid piece from the group
-            MeshRenderer selectedPiece = asteroidPieces[Random.Range(0, asteroidPieces.Length)];
-            GameObject selectedAsteroid = selectedPiece.gameObject;
-            
-            // Create a new individual asteroid
-            GameObject individualAsteroid = new GameObject($"GroupAsteroid_{Time.time}_{Random.Range(0, 1000)}");
-            individualAsteroid.transform.position = spawnPosition;
-            individualAsteroid.transform.rotation = Random.rotation;
-            
-            // Copy the mesh and materials
-            MeshFilter originalMeshFilter = selectedAsteroid.GetComponent<MeshFilter>();
-            MeshRenderer originalRenderer = selectedAsteroid.GetComponent<MeshRenderer>();
-            
-            if (originalMeshFilter != null)
+            var piece = pieces[Random.Range(0, pieces.Length)].gameObject;
+
+            GameObject go = new GameObject($"GroupAsteroid_{Time.time}_{Random.Range(0, 1000)}");
+            go.transform.SetPositionAndRotation(spawnPos, Random.rotation);
+
+            var srcMF = piece.GetComponent<MeshFilter>();
+            var srcMR = piece.GetComponent<MeshRenderer>();
+            if (srcMF && srcMR)
             {
-                MeshFilter newMeshFilter = individualAsteroid.AddComponent<MeshFilter>();
-                newMeshFilter.mesh = originalMeshFilter.mesh;
-                
-                MeshRenderer newRenderer = individualAsteroid.AddComponent<MeshRenderer>();
-                newRenderer.materials = originalRenderer.materials;
+                var mf = go.AddComponent<MeshFilter>();
+                mf.sharedMesh = srcMF.sharedMesh;
+
+                var mr = go.AddComponent<MeshRenderer>();
+                mr.sharedMaterials = srcMR.sharedMaterials;
+
+                var mc = go.AddComponent<MeshCollider>();
+                mc.sharedMesh = srcMF.sharedMesh;
+                mc.convex = true;
+                mc.isTrigger = true;
             }
-            
-            // Add collider
-            MeshCollider collider = individualAsteroid.AddComponent<MeshCollider>();
-            collider.convex = true;
-            
-            // Apply random scale
+
             float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
-            individualAsteroid.transform.localScale = Vector3.one * scale;
-            
-            // Add physics and movement
-            var rb = individualAsteroid.AddComponent<Rigidbody>();
+            go.transform.localScale = Vector3.one * scale;
+
+            var rb = go.AddComponent<Rigidbody>();
             rb.useGravity = false;
-            
-            var asteroid = individualAsteroid.AddComponent<Asteroid>();
-            asteroid.direction = -cam.transform.forward;
+            rb.interpolation = RigidbodyInterpolation.Interpolate;
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+
+            var asteroid = go.AddComponent<Asteroid>();
+            asteroid.direction = (aimAtPlayer && player)
+                ? (player.position - spawnPos).normalized
+                : -cam.transform.forward;
             asteroid.speed = Random.Range(speedRange.x, speedRange.y);
             asteroid.maxLifetime = 30f;
+
+            ApplyLayerAndTriggers(go);
         }
-        
-        Destroy(tempGroup);
+
+        Destroy(temp);
     }
 
+    // ----- helpers -----
+
+    void ApplyLayerAndTriggers(GameObject go)
+    {
+        if (asteroidLayer != -1) SetLayerRecursive(go.transform, asteroidLayer);
+        foreach (var col in go.GetComponentsInChildren<Collider>(true))
+            col.isTrigger = true; // never physically block
+    }
+
+    static void SetLayerRecursive(Transform t, int layer)
+    {
+        t.gameObject.layer = layer;
+        for (int i = 0; i < t.childCount; i++) SetLayerRecursive(t.GetChild(i), layer);
+    }
 }
