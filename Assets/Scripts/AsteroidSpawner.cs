@@ -4,33 +4,25 @@ public class AsteroidSpawner : MonoBehaviour
 {
     [Header("References")]
     public Camera cam;
-    public GameObject[] asteroidPrefabs;      // drag your asteroid prefabs here
-    public Transform player;
-    public bool aimAtPlayer = false;
+    public GameObject[] asteroidPrefabs;   // drag prefab assets (blue cubes)
+    public Transform player;               // drag SpaceShuttle v1 here
+    public bool aimAtPlayer = true;
 
-    [Header("Prefab Settings")]
-    [Tooltip("Set true if your prefabs are big groups like asteroid_belt_group_SRP_01")]
-    public bool prefabsAreGroups = true;
-    [Tooltip("When using group prefabs, spawn single rocks extracted from the group")]
-    public bool extractIndividualAsteroids = true;
+    [Header("Center Tunnel Spawn")]
+    public float spawnDepth = 25f;                  // closer so you see them sooner (was 55)
+    public float spawnInterval = 0.10f;             // faster stream
+    public Vector2 centerJitter = new Vector2(0.25f, 0.18f);
 
-    [Header("Spawning")]
-    public float spawnInterval = 0.8f;
-    public float spawnDepthOffset = 20f;      // distance in front of camera
-    public Vector2 viewportSpread = new Vector2(10f, 8f); // world-unit spread
-
-    [Header("Group Spawning")]
-    [Range(0f, 1f)] public float groupSpawnChance = 0.25f;
-    public Vector2Int groupSizeRange = new Vector2Int(2, 3);
-    public float groupSpread = 8f;
-    public Vector2 groupPositionVariation = new Vector2(4f, 3f);
+    [Header("Pass & Scatter")]
+    public float behindPassDistance = 15f;          // how far behind camera they keep flying
+    public Vector2 scatterAtPass = new Vector2(9f, 6f); // fan width/height behind camera
+    public float extraConeSpreadDeg = 0f;           // leave 0; raise to 6–10 for more randomness
 
     [Header("Asteroid Variations")]
-    public Vector2 speedRange = new Vector2(9f, 16f);
-    public Vector2 uniformScaleRange = new Vector2(0.6f, 1.8f);
+    public Vector2 speedRange = new Vector2(22f, 34f);
+    public Vector2 uniformScaleRange = new Vector2(0.9f, 1.6f);
 
     [Header("Layer/Collision")]
-    [Tooltip("Must match your Physics layer name. Use \"Asteroid\" or \"Asteroids\".")]
     public string asteroidLayerName = "Asteroid";
 
     float timer;
@@ -41,10 +33,10 @@ public class AsteroidSpawner : MonoBehaviour
     void Start()
     {
         if (!cam) cam = Camera.main;
-
-        // support both singular/plural layer names
-        asteroidLayer = LayerMask.NameToLayer(asteroidLayerName);
-        if (asteroidLayer == -1) asteroidLayer = LayerMask.NameToLayer("Asteroids");
+        asteroidLayer = LayerMask.NameToLayer(
+            LayerMask.NameToLayer(asteroidLayerName) != -1 ? asteroidLayerName :
+            (LayerMask.NameToLayer("Asteroids") != -1 ? "Asteroids" : asteroidLayerName)
+        );
     }
 
     void Update()
@@ -55,64 +47,35 @@ public class AsteroidSpawner : MonoBehaviour
         if (timer < spawnInterval) return;
         timer = 0f;
 
-        if (prefabsAreGroups && extractIndividualAsteroids)
-        {
-            if (Random.value < groupSpawnChance) SpawnCustomGroup();
-            else SpawnIndividualFromGroup();
-        }
-        else if (prefabsAreGroups)
-        {
-            SpawnSingle();
-        }
-        else
-        {
-            if (Random.value < groupSpawnChance) SpawnGroup();
-            else SpawnSingle();
-        }
+        Vector3 spawnPos = SpawnPosOnCenterLineWS();
+        GameObject src = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
+        SpawnOne(spawnPos, src);
     }
 
-    void SpawnSingle()
+    // --- spawn exactly on camera optical axis (tiny world jitter) ---
+    Vector3 SpawnPosOnCenterLineWS()
     {
-        var prefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-        SpawnAsteroidAt(GetRandomSpawnPosition(), prefab);
+        Vector3 camSpace = new Vector3(0f, 0f, spawnDepth);
+        Vector3 world = cam.transform.TransformPoint(camSpace);
+        world += cam.transform.right * Random.Range(-centerJitter.x, centerJitter.x);
+        world += cam.transform.up    * Random.Range(-centerJitter.y, centerJitter.y);
+        return world;
     }
 
-    void SpawnGroup()
-    {
-        int groupSize = Random.Range(groupSizeRange.x, groupSizeRange.y + 1);
-        Vector3 basePos = GetRandomSpawnPosition();
-
-        for (int i = 0; i < groupSize; i++)
-        {
-            var prefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-            Vector3 offset = new Vector3(
-                Random.Range(-groupPositionVariation.x, groupPositionVariation.x),
-                Random.Range(-groupPositionVariation.y, groupPositionVariation.y),
-                Random.Range(-groupSpread * 0.5f, groupSpread * 0.5f)
-            );
-            SpawnAsteroidAt(basePos + offset, prefab);
-        }
-    }
-
-    Vector3 GetRandomSpawnPosition()
-    {
-        Vector3 basePos = cam.transform.position + cam.transform.forward * spawnDepthOffset;
-        float sx = Random.Range(-viewportSpread.x, viewportSpread.x);
-        float sy = Random.Range(-viewportSpread.y, viewportSpread.y);
-        return basePos + cam.transform.right * sx + cam.transform.up * sy;
-    }
-
-    void SpawnAsteroidAt(Vector3 spawnPosition, GameObject prefab)
+    void SpawnOne(Vector3 spawnPos, GameObject prefab)
     {
         if (!prefab) return;
 
-        GameObject go = Instantiate(prefab, spawnPosition, Quaternion.identity);
+        GameObject go = ExtractSingleRock(prefab, spawnPos, Random.rotation);
+        if (!go) return;
+
         go.name = $"Asteroid_{prefab.name}_{Time.time}";
 
+        // scale
         float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
         go.transform.localScale = Vector3.one * scale;
 
-        // Rigidbody
+        // physics
         var rb = go.GetComponent<Rigidbody>();
         if (!rb) rb = go.AddComponent<Rigidbody>();
         rb.useGravity = false;
@@ -120,151 +83,73 @@ public class AsteroidSpawner : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        // Asteroid behaviour
+        // behaviour
         var asteroid = go.GetComponent<Asteroid>();
         if (!asteroid) asteroid = go.AddComponent<Asteroid>();
-        Vector3 dir = (aimAtPlayer && player)
-            ? (player.position - spawnPosition).normalized
-            : -cam.transform.forward;
+
+        // --- aim THROUGH the ship, then fan out behind the camera ---
+        // base point to cross (ship if available, else exact screen center in front of camera)
+        Vector3 crossPoint = (aimAtPlayer && player)
+            ? player.position
+            : cam.transform.position + cam.transform.forward * 2f;
+
+        // plane BEHIND the camera for the fan
+        Vector3 passPlaneCenter = cam.transform.TransformPoint(0f, 0f, -behindPassDistance);
+
+        // start from the cross point and push it behind camera, then add spread
+        Vector3 basePassPoint = crossPoint - cam.transform.forward * behindPassDistance;
+        Vector3 spread =
+            cam.transform.right * Random.Range(-scatterAtPass.x, scatterAtPass.x) +
+            cam.transform.up    * Random.Range(-scatterAtPass.y, scatterAtPass.y);
+
+        Vector3 finalTarget = basePassPoint + spread;
+
+        // direction
+        Vector3 dir = (finalTarget - spawnPos).normalized;
+
+        if (extraConeSpreadDeg > 0f)
+        {
+            Vector2 ang = Random.insideUnitCircle * extraConeSpreadDeg;
+            dir = (Quaternion.AngleAxis(ang.x, cam.transform.up) *
+                   Quaternion.AngleAxis(ang.y, cam.transform.right) * dir).normalized;
+        }
+
         asteroid.direction = dir;
         asteroid.speed = Random.Range(speedRange.x, speedRange.y);
-        asteroid.maxLifetime = 30f;
+        asteroid.maxLifetime = 90f;    // long; we handle culling conservatively
 
-        // Layer + triggers so they never physically block
-        ApplyLayerAndTriggers(go);
-    }
-
-    void SpawnIndividualFromGroup()
-    {
-        var groupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-        Vector3 spawnPos = GetRandomSpawnPosition();
-
-        GameObject temp = Instantiate(groupPrefab, Vector3.zero, Quaternion.identity);
-        var pieces = temp.GetComponentsInChildren<MeshRenderer>(true);
-
-        if (pieces.Length > 0)
-        {
-            var piece = pieces[Random.Range(0, pieces.Length)].gameObject;
-
-            GameObject go = new GameObject($"IndividualAsteroid_{Time.time}");
-            go.transform.SetPositionAndRotation(spawnPos, Random.rotation);
-
-            var srcMF = piece.GetComponent<MeshFilter>();
-            var srcMR = piece.GetComponent<MeshRenderer>();
-            if (srcMF && srcMR)
-            {
-                var mf = go.AddComponent<MeshFilter>();
-                mf.sharedMesh = srcMF.sharedMesh;
-
-                var mr = go.AddComponent<MeshRenderer>();
-                mr.sharedMaterials = srcMR.sharedMaterials;
-
-                var mc = go.AddComponent<MeshCollider>();
-                mc.sharedMesh = srcMF.sharedMesh;
-                mc.convex = true;
-                mc.isTrigger = true;
-            }
-
-            float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
-            go.transform.localScale = Vector3.one * scale;
-
-            var rb = go.AddComponent<Rigidbody>();
-            rb.useGravity = false;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-            var asteroid = go.AddComponent<Asteroid>();
-            asteroid.direction = (aimAtPlayer && player)
-                ? (player.position - spawnPos).normalized
-                : -cam.transform.forward;
-            asteroid.speed = Random.Range(speedRange.x, speedRange.y);
-            asteroid.maxLifetime = 30f;
-
-            ApplyLayerAndTriggers(go);
-        }
-        else
-        {
-            // fallback to spawn the full group
-            SpawnAsteroidAt(spawnPos, groupPrefab);
-        }
-
-        Destroy(temp);
-    }
-
-    void SpawnCustomGroup()
-    {
-        int groupSize = Random.Range(groupSizeRange.x, groupSizeRange.y + 1);
-        Vector3 basePos = GetRandomSpawnPosition();
-
-        for (int i = 0; i < groupSize; i++)
-        {
-            Vector3 offset = new Vector3(
-                Random.Range(-groupPositionVariation.x, groupPositionVariation.x),
-                Random.Range(-groupPositionVariation.y, groupPositionVariation.y),
-                Random.Range(-groupSpread * 0.5f, groupSpread * 0.5f)
-            );
-            SpawnIndividualFromGroupAt(basePos + offset);
-        }
-    }
-
-    void SpawnIndividualFromGroupAt(Vector3 spawnPos)
-    {
-        var groupPrefab = asteroidPrefabs[Random.Range(0, asteroidPrefabs.Length)];
-
-        GameObject temp = Instantiate(groupPrefab, Vector3.zero, Quaternion.identity);
-        var pieces = temp.GetComponentsInChildren<MeshRenderer>(true);
-
-        if (pieces.Length > 0)
-        {
-            var piece = pieces[Random.Range(0, pieces.Length)].gameObject;
-
-            GameObject go = new GameObject($"GroupAsteroid_{Time.time}_{Random.Range(0, 1000)}");
-            go.transform.SetPositionAndRotation(spawnPos, Random.rotation);
-
-            var srcMF = piece.GetComponent<MeshFilter>();
-            var srcMR = piece.GetComponent<MeshRenderer>();
-            if (srcMF && srcMR)
-            {
-                var mf = go.AddComponent<MeshFilter>();
-                mf.sharedMesh = srcMF.sharedMesh;
-
-                var mr = go.AddComponent<MeshRenderer>();
-                mr.sharedMaterials = srcMR.sharedMaterials;
-
-                var mc = go.AddComponent<MeshCollider>();
-                mc.sharedMesh = srcMF.sharedMesh;
-                mc.convex = true;
-                mc.isTrigger = true;
-            }
-
-            float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
-            go.transform.localScale = Vector3.one * scale;
-
-            var rb = go.AddComponent<Rigidbody>();
-            rb.useGravity = false;
-            rb.interpolation = RigidbodyInterpolation.Interpolate;
-            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-            var asteroid = go.AddComponent<Asteroid>();
-            asteroid.direction = (aimAtPlayer && player)
-                ? (player.position - spawnPos).normalized
-                : -cam.transform.forward;
-            asteroid.speed = Random.Range(speedRange.x, speedRange.y);
-            asteroid.maxLifetime = 30f;
-
-            ApplyLayerAndTriggers(go);
-        }
-
-        Destroy(temp);
-    }
-
-    // ----- helpers -----
-
-    void ApplyLayerAndTriggers(GameObject go)
-    {
+        // layer/trigger
         if (asteroidLayer != -1) SetLayerRecursive(go.transform, asteroidLayer);
-        foreach (var col in go.GetComponentsInChildren<Collider>(true))
-            col.isTrigger = true; // never physically block
+        foreach (var c in go.GetComponentsInChildren<Collider>(true)) c.isTrigger = true;
+    }
+
+    // Build a one-mesh asteroid from any prefab (belt or single); add SphereCollider(trigger)
+    GameObject ExtractSingleRock(GameObject prefab, Vector3 pos, Quaternion rot)
+    {
+        GameObject temp = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        var parts = temp.GetComponentsInChildren<MeshRenderer>(true);
+        if (parts == null || parts.Length == 0) { Destroy(temp); return null; }
+
+        var src = parts[Random.Range(0, parts.Length)].gameObject;
+        var mfSrc = src.GetComponent<MeshFilter>();
+        var mrSrc = src.GetComponent<MeshRenderer>();
+        if (!mfSrc || !mrSrc || !mfSrc.sharedMesh) { Destroy(temp); return null; }
+
+        GameObject go = new GameObject("Asteroid_Single");
+        go.transform.SetPositionAndRotation(pos, rot);
+
+        var mf = go.AddComponent<MeshFilter>();    mf.sharedMesh = mfSrc.sharedMesh;
+        var mr = go.AddComponent<MeshRenderer>();  mr.sharedMaterials = mrSrc.sharedMaterials;
+
+        // simple trigger collider (avoids convex-256 warnings)
+        var b = mfSrc.sharedMesh.bounds;
+        var sc = go.AddComponent<SphereCollider>();
+        sc.isTrigger = true;
+        sc.radius = Mathf.Max(b.extents.x, b.extents.y, b.extents.z);
+        sc.center = b.center;
+
+        Destroy(temp);
+        return go;
     }
 
     static void SetLayerRecursive(Transform t, int layer)
