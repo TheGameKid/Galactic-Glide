@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 1173491795432570480}
   - component: {fileID: 5767527133165487197}
   - component: {fileID: 5738376565503095229}
+  - component: {fileID: 8888023138442749353}
   m_Layer: 0
   m_Name: asteroid_mod_05_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,6 +113,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4752333041851442042, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &8888023138442749353
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965699762297361166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7714846, y: 0.56784827, z: 0.6390893}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1615077527607850472
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +147,7 @@ GameObject:
   - component: {fileID: 1328286948315209713}
   m_Layer: 0
   m_Name: asteroid_belt_group_SRP_01
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +202,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &1328286948315209713
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -214,9 +236,10 @@ GameObject:
   - component: {fileID: 8581753436657050975}
   - component: {fileID: 7196858829436238472}
   - component: {fileID: 7523647616474514098}
+  - component: {fileID: 6465106099003172173}
   m_Layer: 0
   m_Name: asteroid_mod_07_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -269,7 +292,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -314,6 +337,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3146619269759647760, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &6465106099003172173
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616330460335427613}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3573137, y: 0.21385032, z: 0.30818763}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1681869549936284264
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,9 +370,10 @@ GameObject:
   - component: {fileID: 6249778061832070182}
   - component: {fileID: 3918895240544869444}
   - component: {fileID: 2291880931215601958}
+  - component: {fileID: 144835191640806070}
   m_Layer: 0
   m_Name: asteroid_mod_08_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,7 +426,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -426,6 +471,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3277066133253659789, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &144835191640806070
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681869549936284264}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.26227164, y: 0.24957693, z: 0.23684676}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1872380648841105144
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,9 +504,10 @@ GameObject:
   - component: {fileID: 4679731932895248687}
   - component: {fileID: 7744945918183438258}
   - component: {fileID: 6544411453177292923}
+  - component: {fileID: 566020249012410801}
   m_Layer: 0
   m_Name: asteroid_mod_06_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -493,7 +560,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,6 +605,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -3923832794788286368, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &566020249012410801
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872380648841105144}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5753264, y: 0.49363866, z: 0.47117117}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3829145124397377092
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,9 +638,10 @@ GameObject:
   - component: {fileID: 9169249025532001629}
   - component: {fileID: 2075336736293413302}
   - component: {fileID: 8400101087068840654}
+  - component: {fileID: 3559680523719608288}
   m_Layer: 0
   m_Name: asteroid_mod_01_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -605,7 +694,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -650,6 +739,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1586428044625075342, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &3559680523719608288
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3829145124397377092}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2801722, y: 1.1575818, z: 0.9358297}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5464045000513549474
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,9 +772,10 @@ GameObject:
   - component: {fileID: 4114647976097312888}
   - component: {fileID: 560471571565787747}
   - component: {fileID: 1167314652100516820}
+  - component: {fileID: 6031777220667539265}
   m_Layer: 0
   m_Name: asteroid_mod_03_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -717,7 +828,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -762,6 +873,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 8785904777027576729, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &6031777220667539265
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464045000513549474}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0438907, y: 0.68911266, z: 0.6101102}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7518925780452152090
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,9 +906,10 @@ GameObject:
   - component: {fileID: 95633510663795966}
   - component: {fileID: 5390928656787800622}
   - component: {fileID: 4736652785733272235}
+  - component: {fileID: 8041516379979332730}
   m_Layer: 0
   m_Name: asteroid_mod_02_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -829,7 +962,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -874,6 +1007,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7053893933298424306, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &8041516379979332730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7518925780452152090}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1790957, y: 0.93066585, z: 1.1764823}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7589651159279960668
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,9 +1040,10 @@ GameObject:
   - component: {fileID: 7920582514086690101}
   - component: {fileID: 7546946746714271800}
   - component: {fileID: 1605773953273887187}
+  - component: {fileID: 8665049674323772236}
   m_Layer: 0
   m_Name: asteroid_mod_09_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -941,7 +1096,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -986,6 +1141,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2584285111326269238, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &8665049674323772236
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589651159279960668}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.45881847, y: 0.28637502, z: 0.38278747}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8105143717509115292
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,9 +1174,10 @@ GameObject:
   - component: {fileID: 8706627948899364554}
   - component: {fileID: 2933273421462463517}
   - component: {fileID: 5562377675802828565}
+  - component: {fileID: 879666382361070330}
   m_Layer: 0
   m_Name: asteroid_mod_04_low
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1053,7 +1230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 794bbb459954445479aabff1fdf93826, type: 2}
+  - {fileID: 2100000, guid: aa01981a3dbfcf84883d92fcca7b1249, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1098,3 +1275,24 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1350605415201388534, guid: 78499d97230fe0748a3fc15499c77d48, type: 3}
+--- !u!65 &879666382361070330
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105143717509115292}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.62915725, y: 0.59212714, z: 1.0334651}
+  m_Center: {x: 0, y: 0, z: 0}

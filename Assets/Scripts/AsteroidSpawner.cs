@@ -22,21 +22,21 @@ public class AsteroidSpawner : MonoBehaviour
     public Vector2 speedRange = new Vector2(22f, 34f);
     public Vector2 uniformScaleRange = new Vector2(0.9f, 1.6f);
 
-    [Header("Layer/Collision")]
-    public string asteroidLayerName = "Asteroid";
 
     float timer;
     int asteroidLayer = -1;
+
+ 
 
     void Reset() { cam = Camera.main; }
 
     void Start()
     {
         if (!cam) cam = Camera.main;
-        asteroidLayer = LayerMask.NameToLayer(
-            LayerMask.NameToLayer(asteroidLayerName) != -1 ? asteroidLayerName :
-            (LayerMask.NameToLayer("Asteroids") != -1 ? "Asteroids" : asteroidLayerName)
-        );
+       // asteroidLayer = LayerMask.NameToLayer(
+       //     LayerMask.NameToLayer(asteroidLayerName) != -1 ? asteroidLayerName :
+       //     (LayerMask.NameToLayer("Asteroids") != -1 ? "Asteroids" : asteroidLayerName)
+        //);
     }
 
     void Update()
@@ -70,6 +70,7 @@ public class AsteroidSpawner : MonoBehaviour
         if (!go) return;
 
         go.name = $"Asteroid_{prefab.name}_{Time.time}";
+        go.tag = "Asteroid";
 
         // scale
         float scale = Random.Range(uniformScaleRange.x, uniformScaleRange.y);
@@ -120,7 +121,7 @@ public class AsteroidSpawner : MonoBehaviour
 
         // layer/trigger
         if (asteroidLayer != -1) SetLayerRecursive(go.transform, asteroidLayer);
-        foreach (var c in go.GetComponentsInChildren<Collider>(true)) c.isTrigger = true;
+        foreach (var c in go.GetComponentsInChildren<Collider>(true)) c.isTrigger = false;
     }
 
     // Build a one-mesh asteroid from any prefab (belt or single); add SphereCollider(trigger)
@@ -144,7 +145,7 @@ public class AsteroidSpawner : MonoBehaviour
         // simple trigger collider (avoids convex-256 warnings)
         var b = mfSrc.sharedMesh.bounds;
         var sc = go.AddComponent<SphereCollider>();
-        sc.isTrigger = true;
+        sc.isTrigger = false;
         sc.radius = Mathf.Max(b.extents.x, b.extents.y, b.extents.z);
         sc.center = b.center;
 
