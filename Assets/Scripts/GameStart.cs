@@ -39,6 +39,8 @@ public class GameStart : MonoBehaviour
     public float timer;
 
     public TextMeshProUGUI FinalScore;
+
+    public AudioSource BGM;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -57,7 +59,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 5;
             DDAStartTimer = 5;
             asteroidSpawner.speedRange = new Vector2(6f, 10f);
-            asteroidSpawner.spawnInterval = 0.7f;
+            asteroidSpawner.spawnInterval = 0.5f;
             itemSpawner.spawnEvery = 15f;
         }
         if (difficulty == "Normal")
@@ -70,7 +72,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 10;
             DDAStartTimer = 10;
             asteroidSpawner.speedRange = new Vector2(8f, 12f);
-            asteroidSpawner.spawnInterval = 0.5f;
+            asteroidSpawner.spawnInterval = 0.4f;
             itemSpawner.spawnEvery = 10f;
         }
         if (difficulty == "Hard")
@@ -83,7 +85,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 20;
             DDAStartTimer = 20;
             asteroidSpawner.speedRange = new Vector2(10f, 15f);
-            asteroidSpawner.spawnInterval = 0.3f;
+            asteroidSpawner.spawnInterval = 0.2f;
             itemSpawner.spawnEvery = 5f;
         }
 
@@ -118,6 +120,7 @@ public class GameStart : MonoBehaviour
                 Countdown[2].SetActive(false);
                 Countdown[3].SetActive(true);
                 //player.enabled = true;
+                BGM.Play();
             }
             else if (startTimer <= 1)
             {

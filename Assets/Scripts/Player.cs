@@ -271,6 +271,7 @@ public class Player : MonoBehaviour
             BlueFire.SetActive(false);
             ammoAmount.text = "";
             laserAmmo = 0;
+            game.BGM.Stop();
             StartCoroutine(Explosion());
         }
     }

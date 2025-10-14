@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         ResetStuff();
+        Cursor.visible = true;
     }
 
     // Update is called once per frame

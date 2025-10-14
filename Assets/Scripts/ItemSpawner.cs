@@ -66,16 +66,29 @@ public class ItemSpawner : MonoBehaviour
 
     void SpawnOne()
     {
-        GameObject prefab;
+        GameObject prefab = null;
 
         if (player.shield.activeInHierarchy)
         {
             prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length - 1)];
         }
+        else if (player.laserAmmo > 0)
+        {
+            int random = Random.Range(0, 2);
+            if (random == 0)
+            {
+                prefab = itemPrefabs[0];
+            }
+            if (random == 1)
+            {
+                prefab = itemPrefabs[2];
+            }
+        }
         else
         {
             prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
         }
+
         if (!prefab) return;
 
         // --- Viewport padding: shrink the allowed UV box ---
