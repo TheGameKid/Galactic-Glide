@@ -143,4 +143,9 @@ public class MainMenu : MonoBehaviour
         sw.Close();
         SceneManager.LoadScene("Game");
     }
+
+    public void BackToTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
 }
