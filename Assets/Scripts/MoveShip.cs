@@ -1,87 +1,140 @@
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveShip : MonoBehaviour
 {
-    [Header("Path")]
-    public Transform startPoint;
-    public Transform endPoint;
-    public float duration = 3f; // seconds
-    public AnimationCurve ease = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-    [Header("Look & Feel")]
-    public bool faceDirection = true;
-    public float rollAmount = 12f;
+    public bool once;
 
-    [Header("FX (optional)")]
-    public ParticleSystem warpInFX;   // e.g., Warp_Fast_Blue
-    public ParticleSystem engineFX;   // thruster particles
-    public AudioSource whooshSfx;
+    public Vector3 startPos = new Vector3(0, 0, 30f);
+    public Vector3 endPos = new Vector3(0, 0, 1f);
 
-    float t;               // 0..1
-    bool moving;
-    Animator anim;
+    public float moveDuration = 2f; // seconds to move from start to end
+    public float timer = 0f;
+
+    public GameObject Galactic;
+    public float time2 = 0;
+    public float dur2 = 1.5f;
+    public bool once2;
+    public GameObject Glide;
+    public Vector3 targetScale = new Vector3(1f, 1f, 1f);
+    public Vector3 targetScaleShip = new Vector3(1.8f, 1.8f, 1.8f);
+
+    public GameObject Author;
+
+    public GameObject Play;
+    public GameObject Quit;
+
+    public GameObject BlueFire;
+
+    public GameObject B1;
+    public GameObject B2;
+    public GameObject B3;
 
     void Awake()
     {
-        anim = GetComponent<Animator>();
-        if (anim) anim.enabled = false;      // make sure Animator can’t fight us
-    }
+        once = false;
+        once2 = true;
+        moveDuration = 1;
+        transform.localScale = new Vector3(0, 0, 0);
+        Galactic.transform.localScale = new Vector3(0, 0, 0);
+        Glide.transform.localScale = new Vector3(0, 0, 0);
+        time2 = 0;
+        dur2 = 5;
+        timer = 0;
+        Play.SetActive(false);
+        Quit.SetActive(false);
+        Author.SetActive(false);
+        BlueFire.SetActive(false);
 
-    void OnEnable()
-    {
-        // start at startPoint each time we run
-        if (startPoint) transform.position = startPoint.position;
-        t = 0f;
-        moving = true;
+        B1.SetActive(false);
+        B2.SetActive(false);
+        B3.SetActive(false);
 
-        if (warpInFX) warpInFX.Play();
-        if (engineFX)
+        int random = Random.Range(1, 4);
+
+        if (random == 1)
         {
-            engineFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            engineFX.Play();
+            B1.SetActive(true);
         }
-        if (whooshSfx) whooshSfx.Play();
-
-    }
-    void OnDrawGizmosSelected()
-    {
-        if (startPoint && endPoint)
+        else if (random == 2)
         {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(startPoint.position, endPoint.position);
-            Gizmos.DrawSphere(startPoint.position, 0.2f);
-            Gizmos.DrawSphere(endPoint.position, 0.2f);
+            B2.SetActive(true);
         }
+        else
+        {
+            B3.SetActive(true);
+        }
+
     }
 
-
+  
     void Update()
     {
-        if (!moving || !startPoint || !endPoint || duration <= 0f) return;
-
-        t += Time.deltaTime / duration;
-        float k = ease.Evaluate(Mathf.Clamp01(t));
-
-        Vector3 next = Vector3.Lerp(startPoint.position, endPoint.position, k);
-
-        if (faceDirection)
+        if (once)
         {
-            Vector3 dir = (next - transform.position);
-            if (dir.sqrMagnitude > 1e-6f)
+            //0.0033443f, -0.85858f, -3.853f
+            //0.0033443f, -2.17f, -7.13f,
+            timer += Time.deltaTime;
+            Author.SetActive(true);
+
+            if (timer < 1)
             {
-                Quaternion look = Quaternion.LookRotation(dir.normalized, Vector3.up);
-                transform.rotation = look * Quaternion.Euler(0, 0, Mathf.Sin(k * Mathf.PI) * rollAmount);
+                timer += Time.deltaTime;
+                float t = timer / 1;
+                transform.localScale = Vector3.Lerp(transform.localScale, targetScaleShip, t);
+               // Glide.transform.localScale = Vector3.Lerp(Glide.transform.localScale, targetScale, t);
             }
+            else
+            {
+                once = false;
+                Play.SetActive(true);
+                Quit.SetActive(true);
+                BlueFire.SetActive(true);
+            }
+
+
         }
 
-        transform.position = next;
+       
 
-        if (t >= 1f) // arrived -> stop and stay
+         if (once2)
         {
-            transform.position = endPoint.position;
-            moving = false;
-            if (warpInFX) warpInFX.Stop();
-            // keep Animator OFF so the ship stays put
-        }
+            if (time2 < 1)
+            {
+                time2 += Time.deltaTime;
+                float t = time2 / 1;
+                Galactic.transform.localScale = Vector3.Lerp(Galactic.transform.localScale, targetScale, t);
+                Glide.transform.localScale = Vector3.Lerp(Glide.transform.localScale, targetScale, t);
+            }
+            else
+            {
+                once2 = false;
+                once = true;
+            }
+
+            
+        }  
+   
+
+
+    }
+
+    public void StartButton()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void QuitButton()
+    {
+#if UNITY_EDITOR
+        // This only runs in the Unity Editor
+        EditorApplication.isPlaying = false;
+#else
+       
+        Application.Quit();
+#endif
     }
 }
