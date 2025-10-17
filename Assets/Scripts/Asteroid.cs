@@ -103,5 +103,10 @@ public class Asteroid : MonoBehaviour
         {
             return;
         }
+        if (other.gameObject.CompareTag("Item"))
+        {
+            Physics.IgnoreCollision(other, GetComponent<Collider>());
+            return;
+        }
     }
 }
