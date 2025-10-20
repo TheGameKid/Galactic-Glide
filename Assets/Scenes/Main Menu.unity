@@ -470,8 +470,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Survive as long as you can. Dodge the incoming asteroids and collect &
-    use items to help you
+  m_text: Survive as long as you can. Dodge the incoming asteroids and collect items
+    to help you.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -1258,7 +1258,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 446ee7b37a8870d48b4eb9a37a61d274, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.468
+  m_Volume: 0.519
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1918,7 +1918,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2542,8 +2542,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Survive as long as you can. Dodge the incoming asteroids and collect &
-    use items to help you
+  m_text: Survive as long as you can. Dodge the incoming asteroids and collect items
+    to help you.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -2988,7 +2988,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3714,8 +3714,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Survive as long as you can. Dodge the incoming asteroids and collect &
-    use items to help you
+  m_text: Survive as long as you can. Dodge the incoming asteroids and collect items
+    to help you.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -4510,7 +4510,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5882,8 +5882,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -47.344, y: -15.8125}
+  m_AnchoredPosition: {x: 0.52149963, y: 0.1303997}
+  m_SizeDelta: {x: -46.3009, y: -16.0733}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1447236672
 MonoBehaviour:
