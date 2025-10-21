@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Lives > 0 && game.startTimer <= 0 && !game.Menu.activeInHierarchy)
+        if (Lives > 0 && game.startTimer <= 0)
         {
 
             CubeTranslation();

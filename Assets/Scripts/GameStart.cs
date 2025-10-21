@@ -41,8 +41,6 @@ public class GameStart : MonoBehaviour
     public TextMeshProUGUI FinalScore;
 
     public AudioSource BGM;
-
-    public float actualTimer;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -55,26 +53,26 @@ public class GameStart : MonoBehaviour
         {
             WarpObjects[0].SetActive(true);
             SpaceBackground[0].SetActive(true);
-            gameSpeed = 1f;
+            gameSpeed = 1.5f;
             var main = WarpParticles[0].main;
             main.simulationSpeed = gameSpeed;
-            DDATimer = 10;
-            DDAStartTimer = 10;
-            asteroidSpawner.speedRange = new Vector2(2f, 6f);
-            asteroidSpawner.spawnInterval = 0.7f;
+            DDATimer = 5;
+            DDAStartTimer = 5;
+            asteroidSpawner.speedRange = new Vector2(6f, 10f);
+            asteroidSpawner.spawnInterval = 0.5f;
             itemSpawner.spawnEvery = 15f;
         }
         if (difficulty == "Normal")
         {
             WarpObjects[1].SetActive(true);
             SpaceBackground[1].SetActive(true);
-            gameSpeed = 2f;
+            gameSpeed = 3f;
             var main = WarpParticles[1].main;
             main.simulationSpeed = gameSpeed;
-            DDATimer = 15;
-            DDAStartTimer = 15;
-            asteroidSpawner.speedRange = new Vector2(6f, 10f);
-            asteroidSpawner.spawnInterval = 0.5f;
+            DDATimer = 10;
+            DDAStartTimer = 10;
+            asteroidSpawner.speedRange = new Vector2(8f, 12f);
+            asteroidSpawner.spawnInterval = 0.4f;
             itemSpawner.spawnEvery = 10f;
         }
         if (difficulty == "Hard")
@@ -87,7 +85,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 20;
             DDAStartTimer = 20;
             asteroidSpawner.speedRange = new Vector2(10f, 15f);
-            asteroidSpawner.spawnInterval = 0.3f;
+            asteroidSpawner.spawnInterval = 0.2f;
             itemSpawner.spawnEvery = 5f;
         }
 
@@ -153,7 +151,6 @@ public class GameStart : MonoBehaviour
             asteroidSpawner.enabled = true;
             itemSpawner.enabled = true;
             timer += Time.deltaTime;
-            actualTimer += Time.deltaTime;
 
             if (timer > 1)
             {
@@ -174,19 +171,6 @@ public class GameStart : MonoBehaviour
                     main.simulationSpeed = gameSpeed;
                     DDATimer = DDAStartTimer;
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 1, asteroidSpawner.speedRange.y + 1);
-
-                   if (gameSpeed == 4.5)
-                    {
-                        asteroidSpawner.spawnInterval = 0.5f;
-                    }
-                    if (gameSpeed == 7)
-                    {
-                        asteroidSpawner.spawnInterval = 0.3f;
-                    }
-                    if (gameSpeed == 10)
-                    {
-                        asteroidSpawner.spawnInterval = 0.2f;
-                    }
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 1, itemSpawner.speedRange.y + 1);
                 }
                 if (difficulty == "Normal")
@@ -197,21 +181,6 @@ public class GameStart : MonoBehaviour
                     DDATimer = DDAStartTimer;
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 2, asteroidSpawner.speedRange.y + 2);
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 2, itemSpawner.speedRange.y + 2);
-
-                    
-                   
-                    if (gameSpeed >= 11)
-                    {
-                        asteroidSpawner.spawnInterval = 0.2f;
-                    }
-                    else if (gameSpeed >= 7.5)
-                    {
-                        asteroidSpawner.spawnInterval = 0.3f;
-                    }
-                    else if (gameSpeed >= 4.6)
-                    {
-                        asteroidSpawner.spawnInterval = 0.4f;
-                    }
                 }
                 if (difficulty == "Hard")
                 {
