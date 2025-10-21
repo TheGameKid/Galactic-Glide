@@ -1631,7 +1631,6 @@ MonoBehaviour:
   cam: {fileID: 963194227}
   asteroidPrefabs:
   - {fileID: 1615077527607850472, guid: d013c4364aab6b1439a0365bba950554, type: 3}
-<<<<<<< Updated upstream
   player: {fileID: 4208667095176404}
   aimAtPlayer: 1
   spawnDepth: 30
@@ -1879,21 +1878,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38fea4a26ee35724bbbd4dbd37846340, type: 3}
-=======
-  player: {fileID: 0}
-  aimAtPlayer: 0
-  prefabsAreGroups: 1
-  extractIndividualAsteroids: 1
-  spawnInterval: 0.5
-  spawnDepthOffset: 40
-  viewportSpread: {x: 0.04, y: 0.02}
-  groupSpawnChance: 0.3
-  groupSizeRange: {x: 2, y: 5}
-  groupSpread: 5
-  groupPositionVariation: {x: 3, y: 2}
-  speedRange: {x: 4, y: 8}
-  uniformScaleRange: {x: 0.8, y: -1.4}
->>>>>>> Stashed changes
 --- !u!1 &873087965
 GameObject:
   m_ObjectHideFlags: 0
