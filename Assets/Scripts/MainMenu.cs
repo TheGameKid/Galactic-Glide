@@ -12,9 +12,6 @@ public class MainMenu : MonoBehaviour
     public GameObject EasyBackground;
     public GameObject NormalBackground;
     public GameObject HardBackground;
-    public GameObject Heart;
-    public GameObject Lasers;
-    public GameObject Shield;
     public GameObject HowToPlayEasy;
     public GameObject HowToPlayNormal;
     public GameObject HowToPlayHard;
@@ -47,9 +44,6 @@ public class MainMenu : MonoBehaviour
     EasyBackground.SetActive(false);
     NormalBackground.SetActive(false);
     HardBackground.SetActive(false);
-    Heart.SetActive(false);
-    Lasers.SetActive(false);
-    Shield.SetActive(false);
     HowToPlayEasy.SetActive(false);
     HowToPlayNormal.SetActive(false);
     HowToPlayHard.SetActive(false);
@@ -109,9 +103,7 @@ public class MainMenu : MonoBehaviour
             HowToPlayHard.SetActive(true);
         }
 
-        Heart.SetActive(true);
-        Lasers.SetActive(true);
-        Shield.SetActive(true);
+    
     }
     public void BackButton()
     {
@@ -131,9 +123,7 @@ public class MainMenu : MonoBehaviour
             HowToPlayHard.SetActive(false);
         }
 
-        Heart.SetActive(false);
-        Lasers.SetActive(false);
-        Shield.SetActive(false);
+     
     }
 
     public void Go()
