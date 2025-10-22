@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
         if (Lives > 0 && game.startTimer <= 0 && !game.Menu.activeInHierarchy)
         {
 
-            CubeTranslation();
+          
             laserText.SetActive(true);
             //transform.LookAt(Forward.transform);
 
