@@ -46,6 +46,7 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         StreamReader sr = new StreamReader("GalacticGlide/Mode.txt");
+        Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, FullScreenMode.FullScreenWindow);
         difficulty = sr.ReadLine();
         sr.Close();
         
@@ -53,26 +54,26 @@ public class GameStart : MonoBehaviour
         {
             WarpObjects[0].SetActive(true);
             SpaceBackground[0].SetActive(true);
-            gameSpeed = 1.5f;
+            gameSpeed = 1f;
             var main = WarpParticles[0].main;
             main.simulationSpeed = gameSpeed;
-            DDATimer = 5;
-            DDAStartTimer = 5;
-            asteroidSpawner.speedRange = new Vector2(6f, 10f);
-            asteroidSpawner.spawnInterval = 0.5f;
+            DDATimer = 10;
+            DDAStartTimer = 10;
+            asteroidSpawner.speedRange = new Vector2(2f, 6f);
+            asteroidSpawner.spawnInterval = 2.5f;
             itemSpawner.spawnEvery = 15f;
         }
         if (difficulty == "Normal")
         {
             WarpObjects[1].SetActive(true);
             SpaceBackground[1].SetActive(true);
-            gameSpeed = 3f;
+            gameSpeed = 2f;
             var main = WarpParticles[1].main;
             main.simulationSpeed = gameSpeed;
-            DDATimer = 10;
-            DDAStartTimer = 10;
-            asteroidSpawner.speedRange = new Vector2(8f, 12f);
-            asteroidSpawner.spawnInterval = 0.4f;
+            DDATimer = 15;
+            DDAStartTimer = 15;
+            asteroidSpawner.speedRange = new Vector2(6f, 10f);
+            asteroidSpawner.spawnInterval = 1.5f;
             itemSpawner.spawnEvery = 10f;
         }
         if (difficulty == "Hard")
@@ -85,7 +86,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 20;
             DDAStartTimer = 20;
             asteroidSpawner.speedRange = new Vector2(10f, 15f);
-            asteroidSpawner.spawnInterval = 0.2f;
+            asteroidSpawner.spawnInterval = 0.3f;
             itemSpawner.spawnEvery = 5f;
         }
 
@@ -172,6 +173,35 @@ public class GameStart : MonoBehaviour
                     DDATimer = DDAStartTimer;
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 1, asteroidSpawner.speedRange.y + 1);
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 1, itemSpawner.speedRange.y + 1);
+
+                    if (gameSpeed == 2.5)
+                    {
+                        asteroidSpawner.spawnInterval = 2f;
+                    }
+                    if (gameSpeed == 3.5)
+                    {
+                        asteroidSpawner.spawnInterval = 1.5f;
+                    }
+                    if (gameSpeed == 4.5)
+                    {
+                        asteroidSpawner.spawnInterval = 1f;
+                    }
+                    if (gameSpeed == 6.5)
+                    {
+                        asteroidSpawner.spawnInterval = 0.7f;
+                    }
+                    if (gameSpeed == 7)
+                    {
+                        asteroidSpawner.spawnInterval = 0.5f;
+                    }
+                    if (gameSpeed == 9)
+                    {
+                        asteroidSpawner.spawnInterval = 0.3f;
+                    }
+                    if (gameSpeed == 10)
+                    {
+                        asteroidSpawner.spawnInterval = 0.2f;
+                    }
                 }
                 if (difficulty == "Normal")
                 {
@@ -181,6 +211,22 @@ public class GameStart : MonoBehaviour
                     DDATimer = DDAStartTimer;
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 2, asteroidSpawner.speedRange.y + 2);
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 2, itemSpawner.speedRange.y + 2);
+                    if (gameSpeed >= 11)
+                    {
+                        asteroidSpawner.spawnInterval = 0.2f;
+                    }
+                    else if (gameSpeed >= 7.5)
+                    {
+                        asteroidSpawner.spawnInterval = 0.3f;
+                    }
+                    else if (gameSpeed >= 5.3)
+                    {
+                        asteroidSpawner.spawnInterval = 0.4f;
+                    }
+                    else if (gameSpeed >= 3.2)
+                    {
+                        asteroidSpawner.spawnInterval = 0.7f;
+                    }
                 }
                 if (difficulty == "Hard")
                 {

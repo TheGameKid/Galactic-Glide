@@ -35,6 +35,7 @@ public class MoveShip : MonoBehaviour
 
     void Awake()
     {
+        Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, FullScreenMode.FullScreenWindow);
         once = false;
         once2 = true;
         moveDuration = 1;

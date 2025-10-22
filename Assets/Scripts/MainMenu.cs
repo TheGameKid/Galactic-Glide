@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         ResetStuff();
+        Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, FullScreenMode.FullScreenWindow);
         Cursor.visible = true;
     }
 
