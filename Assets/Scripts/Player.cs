@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Lives > 0 && game.startTimer <= 0)
+        if (Lives > 0 && game.startTimer <= 0 && !game.Menu.activeInHierarchy)
         {
 
             CubeTranslation();
@@ -159,7 +159,14 @@ public class Player : MonoBehaviour
 
         }
     }
+    private void FixedUpdate()
+    {
+        if (Lives > 0 && game.startTimer <= 0 && !game.Menu.activeInHierarchy)
+        {
 
+            CubeTranslation();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Laser"))
