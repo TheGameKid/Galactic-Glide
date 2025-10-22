@@ -567,7 +567,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &128845450
 RectTransform:
   m_ObjectHideFlags: 0
@@ -703,7 +703,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &134797922
 RectTransform:
   m_ObjectHideFlags: 0
@@ -972,7 +972,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &181389628
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1064,7 +1064,6 @@ RectTransform:
   - {fileID: 1622950466}
   - {fileID: 2055864164}
   - {fileID: 847705663}
-  - {fileID: 1823838377}
   m_Father: {fileID: 1122185499}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1235,9 +1234,6 @@ MonoBehaviour:
   EasyBackground: {fileID: 2075035554}
   NormalBackground: {fileID: 491765602}
   HardBackground: {fileID: 1622527325}
-  Heart: {fileID: 5292153889669021330}
-  Lasers: {fileID: 7799478312410256613}
-  Shield: {fileID: 2172842079147824722}
   HowToPlayEasy: {fileID: 213914837}
   HowToPlayNormal: {fileID: 1875329614}
   HowToPlayHard: {fileID: 794778703}
@@ -3034,7 +3030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &794778704
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3826,10 +3822,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1875329615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -320.68, y: 153.47}
-  m_SizeDelta: {x: 484.9318, y: 37.5056}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000017166, y: 0}
+  m_SizeDelta: {x: 636.4034, y: 252.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913561915
 MonoBehaviour:
@@ -3851,7 +3847,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ': Move'
+  m_text: 'Arrow Keys: Move\n\nHeart: Increases health by 1 (Max: 3)\n\nLaser Ammo:
+    +10 Ammo (use Spacebar)\n\nShield: Activates Shield Bubble
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -4317,7 +4316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1075915231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4556,7 +4555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1144060127
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5188,7 +5187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1275340434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5633,10 +5632,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 213914838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -320.68, y: 153.47}
-  m_SizeDelta: {x: 484.9318, y: 37.5056}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000016212, y: 0.0000038147}
+  m_SizeDelta: {x: 627.9486, y: 277.3474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1389237147
 MonoBehaviour:
@@ -5658,7 +5657,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ': Move'
+  m_text: 'Arrow Keys: Move\n\nHeart: Increases health by 1 (Max: 3)\n\nLaser Ammo:
+    +10 Ammo (use Spacebar)\n\nShield: Activates Shield Bubble
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -6346,7 +6348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1622950466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6663,7 +6665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663054141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6935,7 +6937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1752491215
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7071,7 +7073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1759858733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7222,10 +7224,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 794778704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -320.68, y: 153.47}
-  m_SizeDelta: {x: 484.9318, y: 37.5056}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.0000095367}
+  m_SizeDelta: {x: 639.8695, y: 232.6488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762012785
 MonoBehaviour:
@@ -7247,7 +7249,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ': Move'
+  m_text: 'Arrow Keys: Move\n\nHeart: Increases health by 1 (Max: 3)\n\nLaser Ammo:
+    +10 Ammo (use Spacebar)\n\nShield: Activates Shield Bubble
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
   m_sharedMaterial: {fileID: 6967762224324089241, guid: 870c665cc6daaf94ba1eab923bf66a01, type: 2}
@@ -7555,7 +7560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1811307165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7673,78 +7678,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811307164}
-  m_CullTransparentMesh: 1
---- !u!1 &1823838376
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1823838377}
-  - component: {fileID: 1823838379}
-  - component: {fileID: 1823838378}
-  m_Layer: 0
-  m_Name: RawImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1823838377
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823838376}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 213914838}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -212, y: 161}
-  m_SizeDelta: {x: 69.6565, y: 47.6839}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1823838378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823838376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 9c1a55a3ad006034f8501a8939a0d700, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!222 &1823838379
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1823838376}
   m_CullTransparentMesh: 1
 --- !u!1 &1851228305
 GameObject:
