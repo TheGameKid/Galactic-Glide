@@ -45,10 +45,22 @@ public class GameStart : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        StreamReader sr = new StreamReader("GalacticGlide/Mode.txt");
+        string dir = Path.Combine(Application.persistentDataPath, "GalacticGlide");
+        string filePath = Path.Combine(dir, "Mode.txt");
+
+        if (File.Exists(filePath))
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                difficulty = sr.ReadLine();
+            }
+        }
+        else
+        {
+            difficulty = "Easy"; // fallback if file missing
+        }
+
         Screen.SetResolution(Display.main.systemWidth, Display.main.systemHeight, FullScreenMode.FullScreenWindow);
-        difficulty = sr.ReadLine();
-        sr.Close();
         
         if (difficulty == "Easy")
         {

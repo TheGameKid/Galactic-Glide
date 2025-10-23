@@ -129,9 +129,13 @@ public class MainMenu : MonoBehaviour
 
     public void Go()
     {
-        StreamWriter sw = new StreamWriter("GalacticGlide/Mode.txt");
-        sw.WriteLine(difficulty);
-        sw.Close();
+        // Write to a per-user, OS-safe location
+        string dir = Path.Combine(Application.persistentDataPath, "GalacticGlide");
+        Directory.CreateDirectory(dir); // ensure folder exists
+
+        string filePath = Path.Combine(dir, "Mode.txt");
+        File.WriteAllText(filePath, difficulty);
+
         SceneManager.LoadScene("Game");
     }
 
