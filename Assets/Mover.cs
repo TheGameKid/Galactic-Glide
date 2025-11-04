@@ -9,6 +9,7 @@ public class Mover : MonoBehaviour
     float timeElapsed;
     public AudioSource asteroidDestroyed;
     public GameStart game;
+    public GameObject explosion;
     
     /// <summary>
     /// This method shows how fast the bullet moves
@@ -53,7 +54,15 @@ public class Mover : MonoBehaviour
         if (other.gameObject.CompareTag("Asteroid"))
         {
             Destroy(other.gameObject);
-            game.score += 10;
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            if (game.player.TimesTwo.activeInHierarchy)
+            {
+                game.score += 20;
+            }
+            else
+            {
+                game.score += 10;
+            }
             asteroidDestroyed.Play();
         }
     }

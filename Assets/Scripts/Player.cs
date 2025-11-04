@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     public AudioSource LaserPack;
     public AudioSource Shield;
     public AudioSource ShieldGone;
+    public AudioSource Multiply;
     public AudioSource Open;
     public AudioSource Close;
 
@@ -54,6 +55,10 @@ public class Player : MonoBehaviour
     public float timer = 0f;
 
     public GameObject laserText;
+    public GameObject RainbowEffect;
+    public Rainbow rainbow;
+    public GameObject TimesTwo;
+    public bool mult;
 
     void Awake() // NEW
     {
@@ -86,6 +91,8 @@ public class Player : MonoBehaviour
 
         laserAmmo = 10;
         laserText.SetActive(false);
+        RainbowEffect.SetActive(true);
+        TimesTwo.SetActive(false);
 
     }
 
@@ -131,6 +138,8 @@ public class Player : MonoBehaviour
                 hearts[2].SetActive(false);
                 Open.Play();
                 Time.timeScale = 0;
+                TimesTwo.SetActive(false);
+                laserText.SetActive(false);
             }
 
         }
@@ -213,6 +222,14 @@ public class Player : MonoBehaviour
                 Destroy(other.gameObject);
                 Shield.Play();
             }
+            if (other.gameObject.name == "Multiply(Clone)")
+            {
+                rainbow.StartMoving();
+                Destroy(other.gameObject);
+                Multiply.Play();
+                game.SpawnMultiply = false;
+                mult = true;
+            }
         }
     }
 
@@ -273,6 +290,8 @@ public class Player : MonoBehaviour
             game.SpaceBackground[0].SetActive(false);
             game.SpaceBackground[1].SetActive(false);
             game.SpaceBackground[2].SetActive(false);
+            RainbowEffect.SetActive(false);
+            TimesTwo.SetActive(false);
             game.HUD[0].SetActive(false);
             game.HUD[1].SetActive(false);
             BlueFire.SetActive(false);

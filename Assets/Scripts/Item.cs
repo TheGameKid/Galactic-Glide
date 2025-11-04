@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
     public Vector2 randomSpinRange = new Vector2(-180f, 180f); // deg/sec
 
     [Header("Lifetime")]
-    public float maxLifetime = 90f;
+    public float maxLifetime = 10f;
 
     [Header("Fade Settings")]
     public float fadeStartDistance = 6f;
@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
 
     private Rigidbody rb;
     private Camera cam;
-    private float life;
+    public float life = 0;
     private Vector3 spinDegPerSec;
     private Renderer rend;
     private Color baseColor;
@@ -53,16 +53,18 @@ public class Item : MonoBehaviour
         rb.MovePosition(rb.position + direction * speed * Time.fixedDeltaTime);
         rb.MoveRotation(Quaternion.Euler(spinDegPerSec * Time.fixedDeltaTime) * rb.rotation);
 
-        // Lifetime
-        life += Time.fixedDeltaTime;
-        if (life >= maxLifetime)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         // Fade near camera
         HandleFadeNearCamera();
+    }
+
+    private void Update()
+    {
+        // Lifetime
+        life += Time.deltaTime;
+        if (life >= maxLifetime)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     void HandleFadeNearCamera()
@@ -81,6 +83,8 @@ public class Item : MonoBehaviour
             c.a = alpha;
             rend.material.color = c;
         }
+
+
     }
 
 

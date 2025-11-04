@@ -159,6 +159,7 @@ MonoBehaviour:
   factor: 1
   asteroidDestroyed: {fileID: 0}
   game: {fileID: 0}
+  explosion: {fileID: 9074026579876303174, guid: 1bbcbb2290b6f6a4abd93a49a146aebc, type: 3}
 --- !u!82 &-2380097080352805711
 AudioSource:
   m_ObjectHideFlags: 0

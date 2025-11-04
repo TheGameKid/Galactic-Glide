@@ -31,6 +31,7 @@ public class ItemSpawner : MonoBehaviour
 
     float delay = 5f;
     bool isDelay = false;
+    public bool SpawnStar = false;
 
     void Awake()
     {
@@ -64,29 +65,40 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
-    void SpawnOne()
+    public void SpawnOne()
     {
         GameObject prefab = null;
+        bool pickOne = true;
+       
+        
 
-        if (player.shield.activeInHierarchy)
-        {
-            prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length - 1)];
-        }
-        else if (player.laserAmmo > 0)
-        {
-            int random = Random.Range(0, 2);
-            if (random == 0)
+        while (pickOne) {
+
+            int random;
+
+            if (SpawnStar)
             {
-                prefab = itemPrefabs[0];
+                random = 3;
+                pickOne = false;
+                player.game.SpawnMultiply = false;
+                prefab = itemPrefabs[random];
+                SpawnStar = false;
             }
-            if (random == 1)
+            else
             {
-                prefab = itemPrefabs[2];
+                random = Random.Range(0, 3);
+                if (random == 2 && player.shield.activeInHierarchy)
+                {
+                    pickOne = true;
+                }
+                else
+                {
+                    pickOne = false;
+                    prefab = itemPrefabs[random];
+                }
             }
-        }
-        else
-        {
-            prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
+
+           
         }
 
         if (!prefab) return;

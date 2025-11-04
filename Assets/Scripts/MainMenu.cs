@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
+using TMPro;
+using System;
+using UnityEngine.SocialPlatforms.Impl;
+using System.Collections.Generic;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,15 +16,25 @@ public class MainMenu : MonoBehaviour
     public GameObject EasyBackground;
     public GameObject NormalBackground;
     public GameObject HardBackground;
+    public GameObject LeaderBoardBackground;
     public GameObject HowToPlayEasy;
     public GameObject HowToPlayNormal;
     public GameObject HowToPlayHard;
     public GameObject PanelEasy;
     public GameObject PanelNormal;
     public GameObject PanelHard;
+    public GameObject Leaderboard;
+    public GameObject HighScores;
+    public TextMeshProUGUI mode;
     public string difficulty;
-    
-    
+    public string filePath;
+
+    public List<string> names = new List<string>();
+    public List<int> bestScore = new List<int>();
+
+    public TextMeshProUGUI[] BestNames = new TextMeshProUGUI[5];
+    public TextMeshProUGUI[] BestScores = new TextMeshProUGUI[5];
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -51,6 +65,9 @@ public class MainMenu : MonoBehaviour
     PanelEasy.SetActive(false);
     PanelNormal.SetActive(false);
     PanelHard.SetActive(false);
+    Leaderboard.SetActive(false);
+    HighScores.SetActive(false);
+    LeaderBoardBackground.SetActive(false);
     difficulty = "";
     }
 
@@ -81,6 +98,42 @@ public class MainMenu : MonoBehaviour
         LevelSelect.SetActive(false);
         LevelBackground.SetActive(false);
         difficulty = "Hard";
+    }
+    public void LeaderBoard()
+    {
+        LevelSelect.SetActive(false);
+        LevelBackground.SetActive(false);
+        LeaderBoardBackground.SetActive(true);
+        Leaderboard.SetActive(true);
+    }
+    public void EasyBoard()
+    {
+        Leaderboard.SetActive(false);
+        HighScores.SetActive(true);
+        difficulty = "Easy";
+        DisplayScores();
+
+    }
+    public void NormalBoard()
+    {
+        Leaderboard.SetActive(false);
+        HighScores.SetActive(true);
+        difficulty = "Normal";
+        DisplayScores();
+
+    }
+    public void HardBoard()
+    {
+        Leaderboard.SetActive(false);
+        HighScores.SetActive(true);
+        difficulty = "Hard";
+        DisplayScores();
+
+    }
+    public void BackToLeaderBoard()
+    {
+        Leaderboard.SetActive(true);
+        HighScores.SetActive(false);
     }
     public void BacktoMainMenu()
     {
@@ -125,6 +178,77 @@ public class MainMenu : MonoBehaviour
         }
 
      
+    }
+
+    public void DisplayScores()
+    {
+        string dir = Path.Combine(Application.persistentDataPath, "GalacticGlide");
+
+        if (difficulty == "Easy")
+        {
+            mode.text = "EASY";
+            mode.color = Color.lightBlue;
+            filePath = Path.Combine(dir, "EasyHighScore.txt");
+        }
+        if (difficulty == "Normal")
+        {
+            mode.text = "NORMAL";
+            mode.color = Color.yellow;
+            filePath = Path.Combine(dir, "NormalHighScore.txt");
+        }
+        if (difficulty == "Hard")
+        {
+            mode.text = "HARD";
+            mode.color = Color.red;
+            filePath = Path.Combine(dir, "HardHighScore.txt");
+        }
+
+        if (File.Exists(filePath))
+        {
+
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                foreach (string a in File.ReadLines(filePath))
+                {
+                    string[] data = a.Split(" ");
+                    names.Add(data[0]);
+                    bestScore.Add(int.Parse(data[1]));
+                }
+
+
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                BestNames[i].color = Color.white;
+                BestScores[i].color = Color.white;
+                BestNames[i].text = (i + 1).ToString() + ". " + names[i];
+                BestScores[i].text = bestScore[i].ToString();
+            }
+
+            names.Clear();
+            bestScore.Clear();
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                names.Add("N/A");
+                bestScore.Add(0);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                BestNames[i].color = Color.white;
+                BestScores[i].color = Color.white;
+                BestNames[i].text = (i + 1).ToString() + ". " + names[i];
+                BestScores[i].text = bestScore[i].ToString();
+            }
+
+            names.Clear();
+            bestScore.Clear();
+
+        }
     }
 
     public void Go()
