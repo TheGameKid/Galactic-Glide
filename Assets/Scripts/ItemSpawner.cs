@@ -87,7 +87,11 @@ public class ItemSpawner : MonoBehaviour
             else
             {
                 random = Random.Range(0, 3);
-                if (random == 2 && player.shield.activeInHierarchy)
+                if (random == 1 && player.laserAmmo > 10)
+                {
+                    pickOne = true;
+                }
+                else if (random == 2 && player.shield.activeInHierarchy)
                 {
                     pickOne = true;
                 }

@@ -122,7 +122,7 @@ public class GameStart : MonoBehaviour
             DDATimer = 20;
             DDAStartTimer = 20;
             asteroidSpawner.speedRange = new Vector2(10f, 15f);
-            asteroidSpawner.spawnInterval = 0.3f;
+            asteroidSpawner.spawnInterval = 1f;
             itemSpawner.spawnEvery = 5f;
         }
 
@@ -326,6 +326,27 @@ public class GameStart : MonoBehaviour
                     DDATimer = DDAStartTimer;
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 3, asteroidSpawner.speedRange.y + 3);
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 3, itemSpawner.speedRange.y + 3);
+
+                    if (gameSpeed >= 15)
+                    {
+                        asteroidSpawner.spawnInterval = 0.2f;
+                    }
+                    else if (gameSpeed >= 10)
+                    {
+                        asteroidSpawner.spawnInterval = 0.3f;
+                    }
+                    else if (gameSpeed >= 7)
+                    {
+                        asteroidSpawner.spawnInterval = 0.5f;
+                    }
+                    else if (gameSpeed >= 5)
+                    {
+                        asteroidSpawner.spawnInterval = 0.7f;
+                    }
+                    else if (gameSpeed >= 3)
+                    {
+                        asteroidSpawner.spawnInterval = 0.9f;
+                    }
                 }
 
                 

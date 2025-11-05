@@ -212,7 +212,12 @@ public class Player : MonoBehaviour
             }
             if (other.gameObject.name == "Lasers(Clone)")
             {
-                laserAmmo = 10;
+                laserAmmo += 10;
+
+                if (laserAmmo > 20)
+                {
+                    laserAmmo = 20;
+                }
                 Destroy(other.gameObject);
                 LaserPack.Play();
             }
@@ -349,11 +354,11 @@ public class Player : MonoBehaviour
         var kb = Keyboard.current;
         if (kb == null) return;
 
-        if (kb.upArrowKey.isPressed) VY = 0.3f;
-        if (kb.downArrowKey.isPressed) VY = -0.3f;
+        if (kb.upArrowKey.isPressed || kb.wKey.isPressed) VY = 0.3f;
+        if (kb.downArrowKey.isPressed || kb.sKey.isPressed) VY = -0.3f;
 
-        if (kb.leftArrowKey.isPressed) VZ = 0.3f;
-        if (kb.rightArrowKey.isPressed) VZ = -0.3f;
+        if (kb.leftArrowKey.isPressed || kb.aKey.isPressed) VZ = 0.3f;
+        if (kb.rightArrowKey.isPressed || kb.dKey.isPressed) VZ = -0.3f;
 
         // NO rotation code
         Vector3 p = transform.position;
