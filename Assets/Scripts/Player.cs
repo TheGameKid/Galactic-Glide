@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
     public float flashInterval = 0.1f;         // how fast to flash red
     bool isInvincible = false;
 
-    Renderer[] _rends;     // cached renderers to tint
-    Color[] _baseColors;   // original colors to restore
+   public  Renderer[] shipRenderers;     // cached renderers to tint
+   Color[] baseColors;   // original colors to restore
     public GameStart game;
     public AudioSource Fire;
     public AudioSource Hit;
@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     public GameObject RainbowEffect;
     public Rainbow rainbow;
     public GameObject TimesTwo;
+
+    public GameObject Hitbox;
     public bool mult;
 
     void Awake() // NEW
@@ -76,16 +78,17 @@ public class Player : MonoBehaviour
         BlueFire.SetActive(true);
         ExplosionParticle.SetActive(false);
         once = true;
-        _rends = GetComponentsInChildren<Renderer>(true);
-        if (_rends != null && _rends.Length > 0)
+        //_rends = GetComponentsInChildren<Renderer>(true);
+
+        if (shipRenderers != null && shipRenderers.Length > 0)
         {
-            _baseColors = new Color[_rends.Length];
-            for (int i = 0; i < _rends.Length; i++)
+            baseColors = new Color[shipRenderers.Length];
+            for (int i = 0; i < shipRenderers.Length; i++)
             {
-                if (_rends[i].material.HasProperty("_Color"))
-                    _baseColors[i] = _rends[i].material.color;
+                if (shipRenderers[i].material.HasProperty("_Color"))
+                    baseColors[i] = shipRenderers[i].material.color;
                 else
-                    _baseColors[i] = Color.white;
+                    baseColors[i] = Color.white;
             }
         }
 
@@ -93,6 +96,7 @@ public class Player : MonoBehaviour
         laserText.SetActive(false);
         RainbowEffect.SetActive(true);
         TimesTwo.SetActive(false);
+        //Hitbox.SetActive(true);
 
     }
 
@@ -253,11 +257,11 @@ public class Player : MonoBehaviour
         else if (health < 0 && Lives == 0)
         {
             // flash red
-            if (_rends != null)
+            if (shipRenderers != null)
             {
-                for (int i = 0; i < _rends.Length; i++)
+                for (int i = 0; i < shipRenderers.Length; i++)
                 {
-                    var mat = _rends[i].material;
+                    var mat = shipRenderers[i].material;
                     if (!mat.HasProperty("_Color")) continue;
 
                     Color c = Color.red;
@@ -302,6 +306,7 @@ public class Player : MonoBehaviour
             BlueFire.SetActive(false);
             ammoAmount.text = "";
             laserAmmo = 0;
+            //Hitbox.SetActive(false);
             game.BGM.Stop();
             StartCoroutine(Explosion());
         }
@@ -311,40 +316,29 @@ public class Player : MonoBehaviour
     System.Collections.IEnumerator InvincibilityFlash()
     {
         isInvincible = true;
-
         float elapsed = 0f;
-        bool redPhase = false;
+        bool toggle = false;
 
-        while (elapsed < invincibilityDuration)
+        while (elapsed < 2f)
         {
-            elapsed += flashInterval;
-            redPhase = !redPhase;
-
-            // flash red <-> original colors
-            if (_rends != null)
+            toggle = !toggle;
+            for (int i = 0; i < shipRenderers.Length; i++)
             {
-                for (int i = 0; i < _rends.Length; i++)
-                {
-                    var mat = _rends[i].material;
-                    if (!mat.HasProperty("_Color")) continue;
-
-                    Color c = redPhase ? Color.red : _baseColors[i];
-                    mat.color = c;
-                }
+                Renderer r = shipRenderers[i];
+                if (r.material.HasProperty("_Color"))
+                    r.material.color = toggle ? Color.red : baseColors[i];
             }
 
-            yield return new WaitForSeconds(flashInterval);
+            elapsed += 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
 
-        // restore colors
-        if (_rends != null)
+     
+        for (int i = 0; i < shipRenderers.Length; i++)
         {
-            for (int i = 0; i < _rends.Length; i++)
-            {
-                var mat = _rends[i].material;
-                if (mat.HasProperty("_Color"))
-                    mat.color = _baseColors[i];
-            }
+            Renderer r = shipRenderers[i];
+            if (r.material.HasProperty("_Color"))
+                r.material.color = baseColors[i];
         }
 
         isInvincible = false;

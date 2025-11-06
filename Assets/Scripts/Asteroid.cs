@@ -47,6 +47,16 @@ public class Asteroid : MonoBehaviour
                     baseColors[i] = Color.white;
             }
         }
+
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            Collider itemCol = item.GetComponent<Collider>();
+            Collider myCol = GetComponent<Collider>();
+            if (itemCol != null && myCol != null)
+                Physics.IgnoreCollision(myCol, itemCol);
+        }
+
     }
 
     void OnEnable()
@@ -57,6 +67,18 @@ public class Asteroid : MonoBehaviour
             Random.Range(randomSpinRange.x, randomSpinRange.y),
             Random.Range(randomSpinRange.x, randomSpinRange.y)
         );
+    }
+
+    private void Update()
+    {
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            Collider itemCol = item.GetComponent<Collider>();
+            Collider myCol = GetComponent<Collider>();
+            if (itemCol != null && myCol != null)
+                Physics.IgnoreCollision(myCol, itemCol);
+        }
     }
 
     void FixedUpdate()

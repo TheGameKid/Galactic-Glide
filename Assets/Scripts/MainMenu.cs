@@ -9,26 +9,27 @@ using System.Collections.Generic;
 public class MainMenu : MonoBehaviour
 {
     public GameObject LevelSelect;
-    public GameObject EasySelect;
-    public GameObject NormalSelect;
-    public GameObject HardSelect;
+    public GameObject ModeSelect;
+    //public GameObject NormalSelect;
+    //public GameObject HardSelect;
     public GameObject LevelBackground;
     public GameObject EasyBackground;
     public GameObject NormalBackground;
     public GameObject HardBackground;
     public GameObject LeaderBoardBackground;
-    public GameObject HowToPlayEasy;
-    public GameObject HowToPlayEasy2;
-    public GameObject HowToPlayNormal;
-    public GameObject HowToPlayNormal2;
-    public GameObject HowToPlayHard;
-    public GameObject HowToPlayHard2;
-    public GameObject PanelEasy;
-    public GameObject PanelNormal;
-    public GameObject PanelHard;
+    public GameObject HowToPlay;
+    //public GameObject HowToPlayEasy2;
+    //public GameObject HowToPlayNormal;
+    //public GameObject HowToPlayNormal2;
+    //public GameObject HowToPlayHard;
+    //public GameObject HowToPlayHard2;
+    public GameObject Panel;
+   // public GameObject PanelNormal;
+    //public GameObject PanelHard;
     public GameObject Leaderboard;
     public GameObject HighScores;
     public TextMeshProUGUI mode;
+    public TextMeshProUGUI PanelTitle;
     public string difficulty;
     public string filePath;
 
@@ -55,55 +56,51 @@ public class MainMenu : MonoBehaviour
     public void ResetStuff()
     {
     LevelSelect.SetActive(true);
-    EasySelect.SetActive(false);
-    NormalSelect.SetActive(false);
-    HardSelect.SetActive(false);
+    ModeSelect.SetActive(false);
     LevelBackground.SetActive(true);
     EasyBackground.SetActive(false);
     NormalBackground.SetActive(false);
     HardBackground.SetActive(false);
-    HowToPlayEasy.SetActive(false);
-    HowToPlayNormal.SetActive(false);
-    HowToPlayHard.SetActive(false);
-    PanelEasy.SetActive(false);
-    PanelNormal.SetActive(false);
-    PanelHard.SetActive(false);
+    HowToPlay.SetActive(false);
+    Panel.SetActive(false);
     Leaderboard.SetActive(false);
     HighScores.SetActive(false);
-    HowToPlayEasy2.SetActive(false);
-    HowToPlayNormal2.SetActive(false);
-    HowToPlayHard2.SetActive(false);
     LeaderBoardBackground.SetActive(false);
     difficulty = "";
+    PanelTitle.text = "";
     }
 
     public void EasyButton()
     {
         EasyBackground.SetActive(true);
-        EasySelect.SetActive(true);
-        PanelEasy.SetActive(true);
+        ModeSelect.SetActive(true);
+        Panel.SetActive(true);
         LevelSelect.SetActive(false);
         LevelBackground.SetActive(false);
         difficulty = "Easy";
+        PanelTitle.text = "EASY";
+
     }
 
     public void NormalButton()
     {
         NormalBackground.SetActive(true);
-        NormalSelect.SetActive(true);
-        PanelNormal.SetActive(true);
+        ModeSelect.SetActive(true);
+        Panel.SetActive(true);
         LevelSelect.SetActive(false);
         LevelBackground.SetActive(false);
         difficulty = "Normal";
+        PanelTitle.text = "NORMAL";
     }
     public void HardButton()
     {
         HardBackground.SetActive(true);
-        HardSelect.SetActive(true);
-        PanelHard.SetActive(true);
+        ModeSelect.SetActive(true);
+        Panel.SetActive(true);
         LevelSelect.SetActive(false);
         LevelBackground.SetActive(false);
         difficulty = "Hard";
+        PanelTitle.text = "HARD";
     }
     public void LeaderBoard()
     {
@@ -147,78 +144,19 @@ public class MainMenu : MonoBehaviour
     }
     public void NextButton()
     {
-        if (difficulty == "Easy")
-        {
-            PanelEasy.SetActive(false);
-            HowToPlayEasy.SetActive(true);
-        }
-        if (difficulty == "Normal")
-        {
-            PanelNormal.SetActive(false);
-            HowToPlayNormal.SetActive(true);
-        }
-        if (difficulty == "Hard")
-        {
-            PanelHard.SetActive(false);
-            HowToPlayHard.SetActive(true);
-        }
+      
+            Panel.SetActive(false);
+            HowToPlay.SetActive(true);
+        
 
     
     }
-    public void NexttoHowToPlay2()
-    {
-        if (difficulty == "Easy")
-        {
-            HowToPlayEasy.SetActive(false);
-            HowToPlayEasy2.SetActive(true);
-        }
-        if (difficulty == "Normal")
-        {
-            HowToPlayNormal.SetActive(false);
-            HowToPlayNormal2.SetActive(true);
-        }
-        if (difficulty == "Hard")
-        {
-            HowToPlayHard.SetActive(false);
-            HowToPlayHard2.SetActive(true);
-        }
-    }
-    public void BackToHowToPlay1()
-    {
-        if (difficulty == "Easy")
-        {
-            HowToPlayEasy2.SetActive(false);
-            HowToPlayEasy.SetActive(true);
-        }
-        if (difficulty == "Normal")
-        {
-            HowToPlayNormal2.SetActive(false);
-            HowToPlayNormal.SetActive(true);
-        }
-        if (difficulty == "Hard")
-        {
-            HowToPlayHard2.SetActive(false);
-            HowToPlayHard.SetActive(true);
-        }
-    }
+
+
     public void BackButton()
     {
-        if (difficulty == "Easy")
-        {
-            PanelEasy.SetActive(true);
-            HowToPlayEasy.SetActive(false);
-        }
-        if (difficulty == "Normal")
-        {
-            PanelNormal.SetActive(true);
-            HowToPlayNormal.SetActive(false);
-        }
-        if (difficulty == "Hard")
-        {
-            PanelHard.SetActive(true);
-            HowToPlayHard.SetActive(false);
-        }
-
+        Panel.SetActive(true);
+        HowToPlay.SetActive(false);
      
     }
 

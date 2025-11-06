@@ -66,6 +66,8 @@ public class GameStart : MonoBehaviour
     public TextMeshProUGUI[] BestNames = new TextMeshProUGUI[5];
     public TextMeshProUGUI[] BestScores = new TextMeshProUGUI[5];
     public TextMeshProUGUI mode;
+
+    public bool newHighScore = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -413,7 +415,7 @@ public class GameStart : MonoBehaviour
             filePath = Path.Combine(dir, "HardHighScore.txt");
         }
 
-        bool newHighScore = false;
+        newHighScore = false;
         index = 0;
        
         if (File.Exists(filePath))
@@ -438,18 +440,12 @@ public class GameStart : MonoBehaviour
                     index++;
                 }
 
-                if (newHighScore)
-                {
+                    
                     GameOverNext.SetActive(true);
                     GameOverRetry.SetActive(false);
                     GameOverQuit.SetActive(false);
-                }
-                else
-                {
-                    GameOverNext.SetActive(false);
-                    GameOverRetry.SetActive(true);
-                    GameOverQuit.SetActive(true);
-                }
+                
+         
             }
         }
         else
@@ -469,11 +465,23 @@ public class GameStart : MonoBehaviour
 
     public void NextToEnterName()
     {
-        GameOver.SetActive(false);
-        BlackScreen.SetActive(false);
-        EnterYourName.SetActive(true);
-        NewRecordScreen.SetActive(true);
-        NewRecord.Play();
+        if (newHighScore)
+        {
+            GameOver.SetActive(false);
+            BlackScreen.SetActive(false);
+            EnterYourName.SetActive(true);
+            NewRecordScreen.SetActive(true);
+            NewRecord.Play();
+        }
+        else
+        {
+            GameOver.SetActive(false);
+            BlackScreen.SetActive(false);
+            HighScore.SetActive(true);
+            NewRecordScreen.SetActive(true);
+            DisplayScores();
+
+        }
     }
 
     public void NextToLeaderboard()
@@ -581,6 +589,77 @@ public class GameStart : MonoBehaviour
         foreach (GameObject obj in objects)
         {
             Destroy(obj);
+        }
+    }
+
+    public void DisplayScores()
+    {
+        string dir = Path.Combine(Application.persistentDataPath, "GalacticGlide");
+
+        if (difficulty == "Easy")
+        {
+            mode.text = "EASY";
+            mode.color = Color.lightBlue;
+            filePath = Path.Combine(dir, "EasyHighScore.txt");
+        }
+        if (difficulty == "Normal")
+        {
+            mode.text = "NORMAL";
+            mode.color = Color.yellow;
+            filePath = Path.Combine(dir, "NormalHighScore.txt");
+        }
+        if (difficulty == "Hard")
+        {
+            mode.text = "HARD";
+            mode.color = Color.red;
+            filePath = Path.Combine(dir, "HardHighScore.txt");
+        }
+
+        if (File.Exists(filePath))
+        {
+
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                foreach (string a in File.ReadLines(filePath))
+                {
+                    string[] data = a.Split(" ");
+                    names.Add(data[0]);
+                    bestScore.Add(int.Parse(data[1]));
+                }
+
+
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                BestNames[i].color = Color.white;
+                BestScores[i].color = Color.white;
+                BestNames[i].text = (i + 1).ToString() + ". " + names[i];
+                BestScores[i].text = bestScore[i].ToString();
+            }
+
+            names.Clear();
+            bestScore.Clear();
+        }
+        else
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                names.Add("N/A");
+                bestScore.Add(0);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                BestNames[i].color = Color.white;
+                BestScores[i].color = Color.white;
+                BestNames[i].text = (i + 1).ToString() + ". " + names[i];
+                BestScores[i].text = bestScore[i].ToString();
+            }
+
+            names.Clear();
+            bestScore.Clear();
+
         }
     }
 }

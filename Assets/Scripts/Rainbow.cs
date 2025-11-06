@@ -24,9 +24,9 @@ public class Rainbow : MonoBehaviour
         player.TimesTwo.SetActive(true);
         moving = true;
         timer = 0;
-        Vector2 pos = panel.anchoredPosition;
-        pos.x = startX;
-        panel.anchoredPosition = pos;
+       // Vector2 pos = panel.anchoredPosition;
+        //pos.x = startX;
+        //panel.anchoredPosition = pos;
     }
 
     void Update()
@@ -37,15 +37,15 @@ public class Rainbow : MonoBehaviour
         float t = Mathf.Clamp01(timer / moveDuration);
 
         // Move horizontally from startX to endX
-        Vector2 pos = panel.anchoredPosition;
-        pos.x = Mathf.Lerp(startX, endX, t);
-        panel.anchoredPosition = pos;
+        //Vector2 pos = panel.anchoredPosition;
+        //pos.x = Mathf.Lerp(startX, endX, t);
+        //panel.anchoredPosition = pos;
 
         // When done, reset and stop
         if (t >= 1f)
         {
-            pos.x = startX;
-            panel.anchoredPosition = pos;
+          //  pos.x = startX;
+            //panel.anchoredPosition = pos;
             moving = false;
             timer = 0f;
             player.TimesTwo.SetActive(false);
