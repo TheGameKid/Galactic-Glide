@@ -3648,7 +3648,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Move: Arrow Keys / WASD\\n\n\u2022 Shoot: Space \\n(Ammo Count
+  m_text: "\u2022 Move: Arrow Keys / WASD\\n\n\u2022 Shoot: Spacebar \\n(Ammo Count
     is displayed on top of the ship)\\n\n\u2022 Pause: Esc"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
