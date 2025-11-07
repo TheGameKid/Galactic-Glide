@@ -50,6 +50,7 @@ public class Rainbow : MonoBehaviour
             timer = 0f;
             player.TimesTwo.SetActive(false);
             player.mult = false;
+            player.MultiplyGone.Play();
         }
     }
 }

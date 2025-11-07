@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     public AudioSource Multiply;
     public AudioSource Open;
     public AudioSource Close;
+    public AudioSource MultiplyGone;
 
     public TextMeshPro ammoAmount;
 
