@@ -329,23 +329,23 @@ public class GameStart : MonoBehaviour
                     asteroidSpawner.speedRange = new Vector2(asteroidSpawner.speedRange.x + 3, asteroidSpawner.speedRange.y + 3);
                     //itemSpawner.speedRange = new Vector2(itemSpawner.speedRange.x + 3, itemSpawner.speedRange.y + 3);
 
-                    if (gameSpeed >= 15)
+                    if (gameSpeed >= 16)
                     {
                         asteroidSpawner.spawnInterval = 0.2f;
                     }
-                    else if (gameSpeed >= 10)
+                    else if (gameSpeed >= 13)
                     {
                         asteroidSpawner.spawnInterval = 0.3f;
                     }
-                    else if (gameSpeed >= 7)
+                    else if (gameSpeed >= 11)
                     {
                         asteroidSpawner.spawnInterval = 0.5f;
                     }
-                    else if (gameSpeed >= 5)
+                    else if (gameSpeed >= 9)
                     {
                         asteroidSpawner.spawnInterval = 0.7f;
                     }
-                    else if (gameSpeed >= 3)
+                    else if (gameSpeed >= 7)
                     {
                         asteroidSpawner.spawnInterval = 0.9f;
                     }
