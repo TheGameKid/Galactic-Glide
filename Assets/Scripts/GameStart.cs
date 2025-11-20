@@ -245,6 +245,15 @@ public class GameStart : MonoBehaviour
                 }
             }
 
+            if (player.TimesTwo.activeInHierarchy)
+            {
+                Score.color = Color.yellow;
+            }
+            else
+            {
+                Score.color = Color.white;
+            }
+
 
 
             DDATimer -= Time.deltaTime;

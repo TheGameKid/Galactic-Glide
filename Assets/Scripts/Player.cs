@@ -63,6 +63,13 @@ public class Player : MonoBehaviour
     public GameObject Hitbox;
     public bool mult;
 
+    public LineRenderer line;
+    public float laserDistance = 20f;
+
+    public Color lineNormalColor;
+    public Color lineHitColor;
+    public Material lineMaterial;
+
     void Awake() // NEW
     {
         rb = GetComponent<Rigidbody>();
@@ -93,10 +100,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        laserAmmo = 10;
+        laserAmmo = 15;
         laserText.SetActive(false);
         RainbowEffect.SetActive(true);
         TimesTwo.SetActive(false);
+        line.enabled = false;
+        lineNormalColor = Color.green;
+        lineHitColor = Color.red;
+        lineMaterial.color = lineNormalColor;
+        laserDistance = line.transform.lossyScale.z;
         //Hitbox.SetActive(true);
 
     }
@@ -115,6 +127,40 @@ public class Player : MonoBehaviour
             if (laserAmmo > 0)
             {
                 ammoAmount.text = laserAmmo.ToString();
+                line.enabled = true;
+                // Raycast from the LineRenderer's own transform
+                Vector3 start = line.transform.position;
+                Vector3 direction = line.transform.forward;  // your ship fires upward
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(start, direction, out hit, laserDistance))
+                {
+                    if (hit.collider.CompareTag("Asteroid"))
+                    {
+                        // Cut the laser at the collision point
+                        line.SetPosition(1, line.transform.InverseTransformPoint(hit.point));
+                        line.startColor = lineHitColor;
+                        line.endColor = lineHitColor;
+                        lineMaterial.color = lineHitColor;
+                    }
+                    else
+                    {
+                        // No asteroid — full distance
+                        line.SetPosition(1, Vector3.forward * laserDistance);
+                        line.startColor = lineNormalColor;
+                        line.endColor = lineNormalColor;
+                        lineMaterial.color = lineNormalColor;
+                    }
+                }
+                else
+                {
+                    // Nothing hit — laser goes full length
+                    line.SetPosition(1, Vector3.forward * laserDistance);
+                    line.startColor = lineNormalColor;
+                    line.endColor = lineNormalColor;
+                    lineMaterial.color = lineNormalColor;
+                }
                 var kb = Keyboard.current;
                 if (kb == null) return;
 
@@ -128,6 +174,7 @@ public class Player : MonoBehaviour
                     if (laserAmmo == 0)
                     {
                         ammoAmount.text = "";
+                        line.enabled = false;
                     }
                     
                 }
@@ -171,6 +218,18 @@ public class Player : MonoBehaviour
             }
 
 
+        }
+
+        if (Keyboard.current.hKey.wasPressedThisFrame)
+        {
+            if (!Hitbox.activeInHierarchy)
+            {
+                Hitbox.SetActive(true);
+            }
+            else
+            {
+                Hitbox.SetActive(false);
+            }
         }
     }
     private void FixedUpdate()
@@ -219,9 +278,9 @@ public class Player : MonoBehaviour
             {
                 laserAmmo += 10;
 
-                if (laserAmmo > 20)
+                if (laserAmmo > 30)
                 {
-                    laserAmmo = 20;
+                    laserAmmo = 30;
                 }
                 Destroy(other.gameObject);
                 LaserPack.Play();

@@ -3648,8 +3648,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Move: Arrow Keys / WASD\\n\n\u2022 Shoot: Spacebar \\n(Ammo Count
-    is displayed on top of the ship)\\n\n\u2022 Pause: Esc"
+  m_text: "\u2022 Move: Arrow Keys / WASD\\n\n\u2022 Shoot: Spacebar \\n\\n\u2022
+    H: Toggle Hitbox\\n\n\u2022 Pause: Esc"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3676,15 +3676,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.15
+  m_fontSize: 25
   m_fontSizeBase: 25
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4380,9 +4380,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2022 Heart: +1 Life\\n\n\u2022 Ammo: + 10 Ammo (Max 20)\\n\n\u2022 Shield:
-    Grants protection (Till you hit an asteroid)\\n\\n\u2022 Multiplier: Points double
-    for a brief time\\n"
+  m_text: "\u2022 Heart: +1 Life\\n\n\u2022 Ammo: + 10 Ammo (Max 30)\\n\n\u2022 Shield:
+    Grants protection\\n\\n\u2022 Multiplier: Points double for a brief time\\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4409,7 +4408,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 25.45
   m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 1

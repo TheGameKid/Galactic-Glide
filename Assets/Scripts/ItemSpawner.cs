@@ -87,7 +87,7 @@ public class ItemSpawner : MonoBehaviour
             else
             {
                 random = Random.Range(0, 3);
-                if (random == 1 && player.laserAmmo > 10)
+                if (random == 1 && player.laserAmmo > 15)
                 {
                     pickOne = true;
                 }
